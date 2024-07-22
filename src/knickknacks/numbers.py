@@ -23,30 +23,37 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import os
-import textwrap
-from unittest import TestCase
-from unittest.mock import Mock, patch
-
-# Knickknacks Modules:
-from knickknacks import utils
+import math
 
 
-class TestUtils(TestCase):
-	@patch("knickknacks.utils.pager")
-	@patch("knickknacks.utils.shutil")
-	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
-		cols: int = 80
-		rows: int = 24
-		mockShutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
-		lines: list[str] = [
-			"This is the first line.",
-			"this is the second line.",
-			"123456789 " * 10,
-			"123\n567\n9 " * 10,
-			"This is the third and final line.",
-		]
-		lines = "\n".join(lines).splitlines()
-		utils.page(lines)
-		text: str = "\n".join(textwrap.fill(line.strip(), cols - 1) for line in lines)
-		mockPager.assert_called_once_with(text)
+def clamp(value: float, minimum: float, maximum: float) -> float:
+	"""
+	Clamps the given value between the given minimum and maximum values.
+
+	Args:
+		value: The value to restrict inside the range defined by minimum and maximum.
+		minimum: The minimum value to compare against.
+		maximum: The maximum value to compare against.
+
+	Returns:
+		The result between minimum and maximum.
+	"""
+	return minimum if value < minimum else maximum if value > maximum else value
+
+
+def roundHalfAwayFromZero(number: float, decimals: int = 0) -> float:
+	"""
+	Rounds a float away from 0 if the fractional is 5 or more.
+
+	Note:
+		https://realpython.com/python-rounding
+
+	Args:
+		number: The number to round.
+		decimals: The number of fractional decimal places to round to.
+
+	Returns:
+		The number after rounding.
+	"""
+	multiplier = 10**decimals
+	return math.copysign(math.floor(abs(number) * multiplier + 0.5) / multiplier, number)

@@ -23,30 +23,20 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import os
-import textwrap
 from unittest import TestCase
-from unittest.mock import Mock, patch
 
 # Knickknacks Modules:
-from knickknacks import utils
+from knickknacks import numbers
 
 
-class TestUtils(TestCase):
-	@patch("knickknacks.utils.pager")
-	@patch("knickknacks.utils.shutil")
-	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
-		cols: int = 80
-		rows: int = 24
-		mockShutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
-		lines: list[str] = [
-			"This is the first line.",
-			"this is the second line.",
-			"123456789 " * 10,
-			"123\n567\n9 " * 10,
-			"This is the third and final line.",
-		]
-		lines = "\n".join(lines).splitlines()
-		utils.page(lines)
-		text: str = "\n".join(textwrap.fill(line.strip(), cols - 1) for line in lines)
-		mockPager.assert_called_once_with(text)
+class TestNumbers(TestCase):
+	def test_clamp(self) -> None:
+		self.assertEqual(numbers.clamp(10, 5, 20), 10)
+		self.assertEqual(numbers.clamp(4, 5, 20), 5)
+		self.assertEqual(numbers.clamp(50, 5, 20), 20)
+
+	def test_roundHalfAwayFromZero(self) -> None:
+		self.assertEqual(numbers.roundHalfAwayFromZero(5.4), 5.0)
+		self.assertEqual(numbers.roundHalfAwayFromZero(5.5), 6.0)
+		self.assertEqual(numbers.roundHalfAwayFromZero(-5.4), -5.0)
+		self.assertEqual(numbers.roundHalfAwayFromZero(-5.5), -6.0)

@@ -23,30 +23,35 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import os
-import textwrap
-from unittest import TestCase
-from unittest.mock import Mock, patch
-
-# Knickknacks Modules:
-from knickknacks import utils
+from collections.abc import Callable, Container
+from typing import Any
 
 
-class TestUtils(TestCase):
-	@patch("knickknacks.utils.pager")
-	@patch("knickknacks.utils.shutil")
-	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
-		cols: int = 80
-		rows: int = 24
-		mockShutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
-		lines: list[str] = [
-			"This is the first line.",
-			"this is the second line.",
-			"123456789 " * 10,
-			"123\n567\n9 " * 10,
-			"This is the third and final line.",
-		]
-		lines = "\n".join(lines).splitlines()
-		utils.page(lines)
-		text: str = "\n".join(textwrap.fill(line.strip(), cols - 1) for line in lines)
-		mockPager.assert_called_once_with(text)
+class ContainerEmptyMixin:
+	"""
+	A mixin class to be used in unit tests.
+	"""
+
+	assertIsInstance: Callable[..., Any]
+	assertTrue: Callable[..., Any]
+	assertFalse: Callable[..., Any]
+
+	def assertContainerEmpty(self, obj: Container[Any]) -> None:
+		"""
+		Asserts whether the given object is an empty container.
+
+		Args:
+			obj: The object to test.
+		"""
+		self.assertIsInstance(obj, Container)
+		self.assertFalse(obj)
+
+	def assertContainerNotEmpty(self, obj: Container[Any]) -> None:
+		"""
+		Asserts whether the given object is a non-empty container.
+
+		Args:
+			obj: The object to test.
+		"""
+		self.assertIsInstance(obj, Container)
+		self.assertTrue(obj)

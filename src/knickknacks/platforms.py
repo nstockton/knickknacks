@@ -23,30 +23,46 @@
 from __future__ import annotations
 
 # Built-in Modules:
+import _imp
 import os
-import textwrap
-from unittest import TestCase
-from unittest.mock import Mock, patch
-
-# Knickknacks Modules:
-from knickknacks import utils
+import sys
 
 
-class TestUtils(TestCase):
-	@patch("knickknacks.utils.pager")
-	@patch("knickknacks.utils.shutil")
-	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
-		cols: int = 80
-		rows: int = 24
-		mockShutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
-		lines: list[str] = [
-			"This is the first line.",
-			"this is the second line.",
-			"123456789 " * 10,
-			"123\n567\n9 " * 10,
-			"This is the third and final line.",
-		]
-		lines = "\n".join(lines).splitlines()
-		utils.page(lines)
-		text: str = "\n".join(textwrap.fill(line.strip(), cols - 1) for line in lines)
-		mockPager.assert_called_once_with(text)
+def getDirectoryPath(*args: str) -> str:
+	"""
+	Retrieves the path of the directory where the program is located.
+
+	Args:
+		*args: Positional arguments to be passed to os.join after the directory path.
+
+	Returns:
+		The path.
+	"""
+	if isFrozen():
+		path = os.path.dirname(sys.executable)
+	else:
+		path = os.path.join(os.path.dirname(__file__), os.path.pardir)
+	return os.path.realpath(os.path.join(path, *args))
+
+
+def isFrozen() -> bool:
+	"""
+	Determines whether the program is running from a frozen copy or from source.
+
+	Returns:
+		True if frozen, False otherwise.
+	"""
+	return bool(getattr(sys, "frozen", False) or hasattr(sys, "importers") or _imp.is_frozen("__main__"))
+
+
+def touch(name: str) -> None:
+	"""
+	Touches a file.
+
+	I.E. creates the file if it doesn't exist, or updates the modified time of the file if it does.
+
+	Args:
+		name: the file name to touch.
+	"""
+	with open(name, "a"):
+		os.utime(name, None)

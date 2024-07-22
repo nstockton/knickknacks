@@ -23,30 +23,38 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import os
-import textwrap
+from typing import Any
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 # Knickknacks Modules:
-from knickknacks import utils
+from knickknacks import testing
 
 
-class TestUtils(TestCase):
-	@patch("knickknacks.utils.pager")
-	@patch("knickknacks.utils.shutil")
-	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
-		cols: int = 80
-		rows: int = 24
-		mockShutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
-		lines: list[str] = [
-			"This is the first line.",
-			"this is the second line.",
-			"123456789 " * 10,
-			"123\n567\n9 " * 10,
-			"This is the third and final line.",
-		]
-		lines = "\n".join(lines).splitlines()
-		utils.page(lines)
-		text: str = "\n".join(textwrap.fill(line.strip(), cols - 1) for line in lines)
-		mockPager.assert_called_once_with(text)
+class MockTestCase(Mock):
+	"""
+	A mocked version of TestCase.
+	"""
+
+	def __init__(self, *args: Any, **kwargs: Any) -> None:
+		kwargs["spec_set"] = TestCase
+		kwargs["unsafe"] = True
+		super().__init__(*args, **kwargs)
+
+
+class ContainerEmpty(testing.ContainerEmptyMixin, MockTestCase):
+	"""
+	ContainerEmptyMixin with mocked TestCase.
+	"""
+
+
+class TestTesting(TestCase):
+	def test_ContainerEmptyMixin(self) -> None:
+		test = ContainerEmpty()
+		test.assertContainerEmpty([])
+		test.assertIsInstance.assert_called_once()
+		test.assertFalse.assert_called_once()
+		test.reset_mock()
+		test.assertContainerNotEmpty([])
+		test.assertIsInstance.assert_called_once()
+		test.assertTrue.assert_called_once()
