@@ -134,20 +134,6 @@ LATIN_DECODING_REPLACEMENTS: dict[int, str] = {
 }
 
 
-def latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
-	if isinstance(error, UnicodeEncodeError):
-		# Return value can be bytes or a string.
-		return LATIN_ENCODING_REPLACEMENTS.get(error.object[error.start], b"?"), error.start + 1
-	elif isinstance(error, UnicodeDecodeError):
-		# Return value must be a string.
-		return LATIN_DECODING_REPLACEMENTS.get(error.object[error.start], "?"), error.start + 1
-	else:  # Probably UnicodeTranslateError.
-		raise NotImplementedError("How'd you manage this?") from error
-
-
-codecs.register_error("latin2ascii", latin2ascii)
-
-
 def decodeBytes(data: bytes) -> str:
 	"""
 	Decodes bytes into a string.
@@ -184,3 +170,17 @@ def iterBytes(data: bytes) -> Generator[bytes, None, None]:
 	"""
 	for i in range(len(data)):
 		yield data[i : i + 1]
+
+
+def latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
+	if isinstance(error, UnicodeEncodeError):
+		# Return value can be bytes or a string.
+		return LATIN_ENCODING_REPLACEMENTS.get(error.object[error.start], b"?"), error.start + 1
+	elif isinstance(error, UnicodeDecodeError):
+		# Return value must be a string.
+		return LATIN_DECODING_REPLACEMENTS.get(error.object[error.start], "?"), error.start + 1
+	else:  # Probably UnicodeTranslateError.
+		raise NotImplementedError("How'd you manage this?") from error
+
+
+codecs.register_error("latin2ascii", latin2ascii)
