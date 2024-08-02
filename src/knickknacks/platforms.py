@@ -26,8 +26,10 @@ from __future__ import annotations
 import _imp
 import os
 import sys
+from functools import lru_cache
 
 
+@lru_cache(maxsize=None)
 def getDirectoryPath(*args: str) -> str:
 	"""
 	Retrieves the path of the directory where the program is located.
@@ -45,6 +47,7 @@ def getDirectoryPath(*args: str) -> str:
 	return os.path.realpath(os.path.join(path, *args))
 
 
+@lru_cache(maxsize=None)
 def isFrozen() -> bool:
 	"""
 	Determines whether the program is running from a frozen copy or from source.

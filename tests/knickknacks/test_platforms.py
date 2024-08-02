@@ -40,6 +40,7 @@ class TestPlatforms(TestCase):
 		frozenOutput: str = os.path.realpath(os.path.join(frozenDirName, *subdirectory))
 		mockIsFrozen.return_value = True
 		self.assertEqual(platforms.getDirectoryPath(*subdirectory), frozenOutput)
+		platforms.getDirectoryPath.cache_clear()
 		unfrozenDirName: str = os.path.join(os.path.dirname(platforms.__file__), os.path.pardir)
 		unfrozenOutput: str = os.path.realpath(os.path.join(unfrozenDirName, *subdirectory))
 		mockIsFrozen.return_value = False
@@ -52,14 +53,18 @@ class TestPlatforms(TestCase):
 		del mockSys.importers
 		mockImp.is_frozen.return_value = False
 		self.assertFalse(platforms.isFrozen())
+		platforms.isFrozen.cache_clear()
 		mockImp.is_frozen.return_value = True
 		self.assertTrue(platforms.isFrozen())
+		platforms.isFrozen.cache_clear()
 		mockImp.is_frozen.return_value = False
 		mockSys.importers = True
 		self.assertTrue(platforms.isFrozen())
+		platforms.isFrozen.cache_clear()
 		del mockSys.importers
 		mockSys.frozen = True
 		self.assertTrue(platforms.isFrozen())
+		platforms.isFrozen.cache_clear()
 		mockSys.frozen = False
 		self.assertFalse(platforms.isFrozen())
 
