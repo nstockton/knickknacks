@@ -41,7 +41,8 @@ class TestPlatforms(TestCase):
 		mockIsFrozen.return_value = True
 		self.assertEqual(platforms.getDirectoryPath(*subdirectory), frozenOutput)
 		platforms.getDirectoryPath.cache_clear()
-		unfrozenDirName: str = os.path.join(os.path.dirname(platforms.__file__), os.path.pardir)
+		# The location of the file which called the function, I.E. this file.
+		unfrozenDirName: str = os.path.dirname(__file__)
 		unfrozenOutput: str = os.path.realpath(os.path.join(unfrozenDirName, *subdirectory))
 		mockIsFrozen.return_value = False
 		self.assertEqual(platforms.getDirectoryPath(*subdirectory), unfrozenOutput)

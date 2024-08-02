@@ -24,6 +24,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import _imp
+import inspect
 import os
 import sys
 from functools import lru_cache
@@ -41,9 +42,11 @@ def getDirectoryPath(*args: str) -> str:
 		The path.
 	"""
 	if isFrozen():
+		# Use the location of the executable.
 		path = os.path.dirname(sys.executable)
 	else:
-		path = os.path.join(os.path.dirname(__file__), os.path.pardir)
+		# Use the location of the module which called this function.
+		path = os.path.dirname(inspect.stack()[1].filename)
 	return os.path.realpath(os.path.join(path, *args))
 
 
