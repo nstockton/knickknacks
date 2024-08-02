@@ -34,7 +34,6 @@ from .typedef import REGEX_PATTERN, BytesOrStr
 
 ANSI_COLOR_REGEX: REGEX_PATTERN = re.compile(r"\x1b\[[\d;]+m")
 INDENT_REGEX: REGEX_PATTERN = re.compile(r"^(?P<indent>\s*)(?P<text>.*)", flags=re.UNICODE)
-XML_ATTRIBUTE_REGEX: REGEX_PATTERN = re.compile(r"([\w-]+)(\s*=+\s*('[^']*'|\"[^\"]*\"|(?!['\"])[^\s]*))?")
 WHITE_SPACE_REGEX: REGEX_PATTERN = re.compile(r"\s+", flags=re.UNICODE)
 
 
@@ -108,31 +107,6 @@ def formatDocString(
 	return docString
 
 
-def getXMLAttributes(text: str) -> dict[str, Union[str, None]]:
-	"""
-	Extracts XML attributes from a tag.
-
-	The supplied string must only contain attributes, not the tag name.
-
-		Note:
-			Adapted from the html.parser module of the Python standard library.
-
-	Args:
-		text: The text to be parsed.
-
-	Returns:
-		The extracted attributes.
-	"""
-	attributes: dict[str, Union[str, None]] = {}
-	for name, rest, value in XML_ATTRIBUTE_REGEX.findall(text):
-		if not rest:
-			value = None
-		elif value[:1] == "'" == value[-1:] or value[:1] == '"' == value[-1:]:
-			value = value[1:-1]
-		attributes[name.lower()] = value
-	return attributes
-
-
 def minIndent(text: str) -> str:
 	"""
 	Retrieves the indention characters from the line with the least indention.
@@ -150,6 +124,24 @@ def minIndent(text: str) -> str:
 			if match is not None:
 				lines.append(match.group("indent"))
 	return min(lines, default="", key=len)
+
+
+def multiReplace(
+	data: BytesOrStr, replacements: Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]
+) -> BytesOrStr:
+	"""
+	Performs multiple replacement operations on a string or bytes-like object.
+
+	Args:
+		data: The text to perform the replacements on.
+		replacements: A sequence of tuples, each containing the text to match and the replacement.
+
+	Returns:
+		The text with all the replacements applied.
+	"""
+	for item in replacements:
+		data = data.replace(*item)
+	return data
 
 
 def regexFuzzy(text: Union[str, Sequence[str]]) -> str:

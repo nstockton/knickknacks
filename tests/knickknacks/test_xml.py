@@ -23,23 +23,25 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import sys
-from typing import TypeVar, Union
+from unittest import TestCase
+
+# Knickknacks Modules:
+from knickknacks import xml
 
 
-if sys.version_info < (3, 10):  # pragma: no cover
-	from typing_extensions import TypeAlias
-else:  # pragma: no cover
-	from typing import TypeAlias
+class TestXML(TestCase):
+	def test_escapeXMLString(self) -> None:
+		originalString: str = "<one&two'\">three"
+		expectedString: str = "&lt;one&amp;two'\"&gt;three"
+		self.assertEqual(xml.escapeXMLString(originalString), expectedString)
 
-if sys.version_info < (3, 9):  # pragma: no cover
-	from typing import Match, Pattern
-else:  # pragma: no cover
-	from re import Match, Pattern
+	def test_getXMLAttributes(self) -> None:
+		self.assertEqual(
+			xml.getXMLAttributes('test1=value1 test2="value2" test3 /'),
+			{"test1": "value1", "test2": "value2", "test3": None},
+		)
 
-
-BytesOrStr = TypeVar("BytesOrStr", bytes, str)
-REGEX_MATCH: TypeAlias = Union[Match[str], None]
-REGEX_PATTERN: TypeAlias = Pattern[str]
-REGEX_BYTES_MATCH: TypeAlias = Union[Match[bytes], None]
-REGEX_BYTES_PATTERN: TypeAlias = Pattern[bytes]
+	def test_unescapeXMLBytes(self) -> None:
+		originalBytes: bytes = b"&lt;'\"one&amp;gt;two&gt;three&#35;four&#x5F;&#x5f;five&amp;#35;six"
+		expectedBytes: bytes = b"<'\"one&gt;two>three#four__five&#35;six"
+		self.assertEqual(xml.unescapeXMLBytes(originalBytes), expectedBytes)

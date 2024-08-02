@@ -23,23 +23,28 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import sys
-from typing import TypeVar, Union
+from unittest import TestCase
+
+# Knickknacks Modules:
+from knickknacks import databytes
 
 
-if sys.version_info < (3, 10):  # pragma: no cover
-	from typing_extensions import TypeAlias
-else:  # pragma: no cover
-	from typing import TypeAlias
+class TestDataBytes(TestCase):
+	def test_decodeBytes(self) -> None:
+		asciiChars: str = "".join(chr(i) for i in range(128))
+		latinChars: str = "".join(chr(i) for i in range(128, 256))
+		latinReplacements: str = "".join(
+			databytes.LATIN_DECODING_REPLACEMENTS.get(ord(char), "?") for char in latinChars
+		)
+		self.assertEqual(databytes.decodeBytes(bytes(asciiChars, "us-ascii")), asciiChars)
+		self.assertEqual(databytes.decodeBytes(bytes(latinChars, "latin-1")), latinReplacements)
+		self.assertEqual(databytes.decodeBytes(bytes(latinChars, "utf-8")), latinReplacements)
 
-if sys.version_info < (3, 9):  # pragma: no cover
-	from typing import Match, Pattern
-else:  # pragma: no cover
-	from re import Match, Pattern
+	def test_iterBytes(self) -> None:
+		sent: bytes = b"hello"
+		expected: tuple[bytes, ...] = (b"h", b"e", b"l", b"l", b"o")
+		self.assertEqual(tuple(databytes.iterBytes(sent)), expected)
 
-
-BytesOrStr = TypeVar("BytesOrStr", bytes, str)
-REGEX_MATCH: TypeAlias = Union[Match[str], None]
-REGEX_PATTERN: TypeAlias = Pattern[str]
-REGEX_BYTES_MATCH: TypeAlias = Union[Match[bytes], None]
-REGEX_BYTES_PATTERN: TypeAlias = Pattern[bytes]
+	def test_latin2ascii(self) -> None:
+		with self.assertRaises(NotImplementedError):
+			databytes.latin2ascii(UnicodeError("junk"))

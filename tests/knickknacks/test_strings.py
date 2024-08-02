@@ -65,15 +65,16 @@ class TestStrings(TestCase):
 			strings.formatDocString(testFunction, width, prefix="  "), expectedOutputIndentTwoSpace
 		)
 
-	def test_getXMLAttributes(self) -> None:
-		self.assertEqual(
-			strings.getXMLAttributes('test1=value1 test2="value2" test3 /'),
-			{"test1": "value1", "test2": "value2", "test3": None},
-		)
-
 	def test_minIndent(self) -> None:
 		self.assertEqual(strings.minIndent("hello\nworld"), "")
 		self.assertEqual(strings.minIndent("\thello\n\t\tworld"), "\t")
+
+	def test_multiReplace(self) -> None:
+		replacements: tuple[tuple[str, str], ...] = (("ll", "yy"), ("h", "x"), ("o", "z"))
+		text: str = "hello world"
+		expectedOutput: str = "xeyyz wzrld"
+		self.assertEqual(strings.multiReplace(text, replacements), expectedOutput)
+		self.assertEqual(strings.multiReplace(text, ()), text)
 
 	def test_regexFuzzy(self) -> None:
 		with self.assertRaises(TypeError):
