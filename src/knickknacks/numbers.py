@@ -23,6 +23,7 @@
 from __future__ import annotations
 
 # Built-in Modules:
+import fractions
 import math
 
 
@@ -39,6 +40,22 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 		The result between minimum and maximum.
 	"""
 	return minimum if value < minimum else maximum if value > maximum else value
+
+
+def floatToFraction(number: float) -> str:
+	"""
+	Converts a float to a fraction.
+
+	Note:
+		https://stackoverflow.com/questions/23344185/how-to-convert-a-decimal-number-into-fraction
+
+	Args:
+		number: The number to convert.
+
+	Returns:
+		A string containing the number as a fraction.
+	"""
+	return str(fractions.Fraction(number).limit_denominator())
 
 
 def roundHalfAwayFromZero(number: float, decimals: int = 0) -> float:

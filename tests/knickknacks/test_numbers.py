@@ -35,6 +35,11 @@ class TestNumbers(TestCase):
 		self.assertEqual(numbers.clamp(4, 5, 20), 5)
 		self.assertEqual(numbers.clamp(50, 5, 20), 20)
 
+	def test_floatToFraction(self) -> None:
+		self.assertEqual(numbers.floatToFraction(0.25), "1/4")
+		self.assertEqual(numbers.floatToFraction(3.14), "157/50")
+		self.assertEqual(numbers.floatToFraction(2), "2")
+
 	def test_roundHalfAwayFromZero(self) -> None:
 		self.assertEqual(numbers.roundHalfAwayFromZero(5.4), 5.0)
 		self.assertEqual(numbers.roundHalfAwayFromZero(5.5), 6.0)
