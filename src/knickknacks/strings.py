@@ -67,7 +67,7 @@ def formatDocString(
 		The formatted docstring.
 	"""
 	if callable(functionOrString):  # It's a function.
-		docString = getattr(functionOrString, "__doc__") or ""
+		docString = getattr(functionOrString, "__doc__", "")
 	else:  # It's a string.
 		docString = functionOrString
 	# Remove any empty lines from the beginning, while keeping indention.

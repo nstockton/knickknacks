@@ -59,7 +59,7 @@ def humanSort(lst: Sequence[str]) -> list[str]:
 	return sorted(
 		lst,
 		key=lambda item: [
-			int(text) if text.isdigit() else text for text in re.split(r"(\d+)", item, re.UNICODE)
+			int(text) if text.isdigit() else text for text in re.split(r"(\d+)", item, flags=re.UNICODE)
 		],
 	)
 
