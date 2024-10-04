@@ -66,10 +66,7 @@ def formatDocString(
 	Returns:
 		The formatted docstring.
 	"""
-	if callable(functionOrString):  # It's a function.
-		docString = getattr(functionOrString, "__doc__", "")
-	else:  # It's a string.
-		docString = functionOrString
+	docString = getattr(functionOrString, "__doc__", "") if callable(functionOrString) else functionOrString
 	# Remove any empty lines from the beginning, while keeping indention.
 	docString = docString.lstrip("\r\n")
 	match = INDENT_REGEX.search(docString)
@@ -100,11 +97,8 @@ def formatDocString(
 			text, width=width - len(linePrefix), break_long_words=False, break_on_hyphens=False
 		)
 		wrappedLines.append(linePrefix + f"\n{linePrefix}".join(lines))
-	docString = "\n".join(wrappedLines)
-	docString = textwrap.indent(
-		docString, prefix=prefix if prefix is not None else ""
-	)  # Indent docstring lines with the prefix.
-	return docString
+	# Indent docstring lines with the prefix.
+	return textwrap.indent("\n".join(wrappedLines), prefix=prefix or "")
 
 
 def minIndent(text: str) -> str:
@@ -156,28 +150,25 @@ def regexFuzzy(text: Union[str, Sequence[str]]) -> str:
 	"""
 	if not isinstance(text, (str, Sequence)):
 		raise TypeError("Text must be either a string or sequence of strings.")
-	elif not text:
+	if not text:
 		return ""
-	elif isinstance(text, str):
+	if isinstance(text, str):
 		return "(".join(list(text)) + ")?" * (len(text) - 1)
-	else:
-		return "|".join("(".join(list(item)) + ")?" * (len(item) - 1) for item in text)
+	return "|".join("(".join(list(item)) + ")?" * (len(item) - 1) for item in text)
 
 
 def removePrefix(text: BytesOrStr, prefix: BytesOrStr) -> BytesOrStr:
 	"""Backport of `removeprefix` from PEP-616 (Python 3.9+)"""
 	if text.startswith(prefix):
 		return text[len(prefix) :]
-	else:
-		return text
+	return text
 
 
 def removeSuffix(text: BytesOrStr, suffix: BytesOrStr) -> BytesOrStr:
 	"""Backport of `removesuffix` from PEP-616 (Python 3.9+)"""
 	if suffix and text.endswith(suffix):
 		return text[: -len(suffix)]
-	else:
-		return text
+	return text
 
 
 def simplified(text: str) -> str:

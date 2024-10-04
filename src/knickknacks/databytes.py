@@ -176,11 +176,11 @@ def latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
 	if isinstance(error, UnicodeEncodeError):
 		# Return value can be bytes or a string.
 		return LATIN_ENCODING_REPLACEMENTS.get(error.object[error.start], b"?"), error.start + 1
-	elif isinstance(error, UnicodeDecodeError):
+	if isinstance(error, UnicodeDecodeError):
 		# Return value must be a string.
 		return LATIN_DECODING_REPLACEMENTS.get(error.object[error.start], "?"), error.start + 1
-	else:  # Probably UnicodeTranslateError.
-		raise NotImplementedError("How'd you manage this?") from error
+	# Probably UnicodeTranslateError.
+	raise NotImplementedError("How'd you manage this?") from error
 
 
 codecs.register_error("latin2ascii", latin2ascii)

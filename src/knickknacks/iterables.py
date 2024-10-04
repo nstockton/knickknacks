@@ -79,8 +79,7 @@ def lpadList(lst: Sequence[Any], padding: Any, count: int, fixed: bool = False) 
 	"""
 	if fixed:
 		return [*[padding] * (count - len(lst)), *lst][:count]
-	else:
-		return [*[padding] * (count - len(lst)), *lst]
+	return [*[padding] * (count - len(lst)), *lst]
 
 
 def padList(lst: Sequence[Any], padding: Any, count: int, fixed: bool = False) -> list[Any]:
@@ -98,5 +97,4 @@ def padList(lst: Sequence[Any], padding: Any, count: int, fixed: bool = False) -
 	"""
 	if fixed:
 		return [*lst, *[padding] * (count - len(lst))][:count]
-	else:
-		return [*lst, *[padding] * (count - len(lst))]
+	return [*lst, *[padding] * (count - len(lst))]

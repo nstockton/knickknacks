@@ -35,18 +35,16 @@ def getDirectoryPath(*args: str) -> str:
 	"""
 	Retrieves the path of the directory where the program is located.
 
+	If frozen, path is based on the location of the executable.
+	If not frozen, path is based on the location of the module which called this function.
+
 	Args:
 		*args: Positional arguments to be passed to os.join after the directory path.
 
 	Returns:
 		The path.
 	"""
-	if isFrozen():
-		# Use the location of the executable.
-		path = os.path.dirname(sys.executable)
-	else:
-		# Use the location of the module which called this function.
-		path = os.path.dirname(inspect.stack()[1].filename)
+	path: str = os.path.dirname(sys.executable if isFrozen() else inspect.stack()[1].filename)
 	return os.path.realpath(os.path.join(path, *args))
 
 
