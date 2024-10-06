@@ -18,7 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 # Future Modules:
 from __future__ import annotations
 
@@ -32,9 +31,7 @@ from knickknacks import testing
 
 
 class MockTestCase(Mock):
-	"""
-	A mocked version of TestCase.
-	"""
+	"""A mocked version of TestCase."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		kwargs["spec_set"] = TestCase
@@ -43,9 +40,7 @@ class MockTestCase(Mock):
 
 
 class ContainerEmpty(testing.ContainerEmptyMixin, MockTestCase):
-	"""
-	ContainerEmptyMixin with mocked TestCase.
-	"""
+	"""ContainerEmptyMixin with mocked TestCase."""
 
 
 class TestTesting(TestCase):

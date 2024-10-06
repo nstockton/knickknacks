@@ -1,3 +1,6 @@
+"""Stuff to do with testing."""
+
+
 # Copyright (c) 2024 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,7 +21,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 # Future Modules:
 from __future__ import annotations
 
@@ -28,9 +30,7 @@ from typing import Any
 
 
 class ContainerEmptyMixin:
-	"""
-	A mixin class to be used in unit tests.
-	"""
+	"""A mixin class to be used in unit tests."""
 
 	assertIsInstance: Callable[..., Any]
 	assertTrue: Callable[..., Any]

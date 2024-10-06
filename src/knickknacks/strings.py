@@ -1,3 +1,6 @@
+"""Stuff to do with strings."""
+
+
 # Copyright (c) 2024 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,7 +20,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 
 # Future Modules:
 from __future__ import annotations
@@ -158,14 +160,14 @@ def regexFuzzy(text: Union[str, Sequence[str]]) -> str:
 
 
 def removePrefix(text: BytesOrStr, prefix: BytesOrStr) -> BytesOrStr:
-	"""Backport of `removeprefix` from PEP-616 (Python 3.9+)"""
+	"""Backport of `removeprefix` from PEP-616 (Python 3.9+)."""
 	if text.startswith(prefix):
 		return text[len(prefix) :]
 	return text
 
 
 def removeSuffix(text: BytesOrStr, suffix: BytesOrStr) -> BytesOrStr:
-	"""Backport of `removesuffix` from PEP-616 (Python 3.9+)"""
+	"""Backport of `removesuffix` from PEP-616 (Python 3.9+)."""
 	if suffix and text.endswith(suffix):
 		return text[: -len(suffix)]
 	return text

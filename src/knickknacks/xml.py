@@ -1,3 +1,6 @@
+"""Stuff to do with XML."""
+
+
 # Copyright (c) 2024 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,7 +20,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 
 # Future Modules:
 from __future__ import annotations
@@ -72,8 +74,8 @@ def getXMLAttributes(text: str) -> dict[str, Union[str, None]]:
 
 	The supplied string must only contain attributes, not the tag name.
 
-		Note:
-			Adapted from the html.parser module of the Python standard library.
+	Note:
+		Adapted from the html.parser module of the Python standard library.
 
 	Args:
 		text: The text to be parsed.

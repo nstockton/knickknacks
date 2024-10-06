@@ -1,3 +1,6 @@
+"""Stuff to do with bytes type objects."""
+
+
 # Copyright (c) 2024 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,7 +20,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
 
 # Future Modules:
 from __future__ import annotations
@@ -172,7 +174,7 @@ def iterBytes(data: bytes) -> Generator[bytes, None, None]:
 		yield data[i : i + 1]
 
 
-def latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
+def _latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
 	if isinstance(error, UnicodeEncodeError):
 		# Return value can be bytes or a string.
 		return LATIN_ENCODING_REPLACEMENTS.get(error.object[error.start], b"?"), error.start + 1
@@ -183,4 +185,4 @@ def latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
 	raise NotImplementedError("How'd you manage this?") from error
 
 
-codecs.register_error("latin2ascii", latin2ascii)
+codecs.register_error("latin2ascii", _latin2ascii)

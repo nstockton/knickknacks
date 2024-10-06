@@ -18,7 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 # Future Modules:
 from __future__ import annotations
 
@@ -47,4 +46,4 @@ class TestDataBytes(TestCase):
 
 	def test_latin2ascii(self) -> None:
 		with self.assertRaises(NotImplementedError):
-			databytes.latin2ascii(UnicodeError("junk"))
+			databytes._latin2ascii(UnicodeError("junk"))
