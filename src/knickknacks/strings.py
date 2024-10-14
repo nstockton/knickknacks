@@ -173,6 +173,19 @@ def removeSuffix(text: BytesOrStr, suffix: BytesOrStr) -> BytesOrStr:
 	return text
 
 
+def removeWhiteSpace(text: str) -> str:
+	"""
+	Replaces one or more consecutive white space characters with a single space.
+
+	Args:
+		text: The text to process.
+
+	Returns:
+		The simplified version of the text.
+	"""
+	return WHITE_SPACE_REGEX.sub("", text)
+
+
 def simplified(text: str) -> str:
 	"""
 	Replaces one or more consecutive white space characters with a single space.

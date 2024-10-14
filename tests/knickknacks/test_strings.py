@@ -99,12 +99,17 @@ class TestStrings(TestCase):
 		self.assertEqual(strings.removeSuffix("hello", "xx"), "hello")
 		self.assertEqual(strings.removeSuffix("hello", ""), "hello")
 
+	def test_removeWhiteSpace(self) -> None:
+		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		expected: str = "HelloworldThisisatest."
+		self.assertEqual(strings.removeWhiteSpace(sent), expected)
+
+	def test_simplified(self) -> None:
+		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		expected: str = "Hello world This is a test."
+		self.assertEqual(strings.simplified(sent), expected)
+
 	def test_stripAnsi(self) -> None:
 		sent: str = "\x1b[32mhello\x1b[0m"
 		expected: str = "hello"
 		self.assertEqual(strings.stripAnsi(sent), expected)
-
-	def test_simplified(self) -> None:
-		sent: str = "Hello world\r\nThis  is\ta\r\n\r\ntest."
-		expected: str = "Hello world This is a test."
-		self.assertEqual(strings.simplified(sent), expected)
