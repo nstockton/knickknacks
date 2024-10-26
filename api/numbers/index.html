@@ -322,6 +322,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#knickknacks.numbers.floatToFraction" class="md-nav__link">
+    floatToFraction()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#knickknacks.numbers.roundHalfAwayFromZero" class="md-nav__link">
     roundHalfAwayFromZero()
   </a>
@@ -448,6 +455,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#knickknacks.numbers.floatToFraction" class="md-nav__link">
+    floatToFraction()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#knickknacks.numbers.roundHalfAwayFromZero" class="md-nav__link">
     roundHalfAwayFromZero()
   </a>
@@ -484,6 +498,7 @@
 
     <div class="doc doc-contents first">
 
+      <p>Stuff to do with numbers.</p>
 
 
 
@@ -571,6 +586,84 @@
 <span class="sd">		The result between minimum and maximum.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">return</span> <span class="n">minimum</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">minimum</span> <span class="k">else</span> <span class="n">maximum</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">maximum</span> <span class="k">else</span> <span class="n">value</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="knickknacks.numbers.floatToFraction" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">floatToFraction</span><span class="p">(</span><span class="n">number</span><span class="p">)</span></code>
+
+
+<a href="#knickknacks.numbers.floatToFraction" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Converts a float to a fraction.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="codehilite"><pre><span></span><code>https://stackoverflow.com/questions/23344185/how-to-convert-a-decimal-number-into-fraction
+</code></pre></div>
+
+</div>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>number</code></td>
+        <td><code>float</code></td>
+        <td><p>The number to convert.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>A string containing the number as a fraction.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>knickknacks/numbers.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">floatToFraction</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Converts a float to a fraction.</span>
+
+<span class="sd">	Note:</span>
+<span class="sd">		https://stackoverflow.com/questions/23344185/how-to-convert-a-decimal-number-into-fraction</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		number: The number to convert.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		A string containing the number as a fraction.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">limit_denominator</span><span class="p">())</span>
 </code></pre></div>
         </details>
     </div>
