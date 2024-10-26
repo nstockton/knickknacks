@@ -175,7 +175,7 @@ def removeSuffix(text: BytesOrStr, suffix: BytesOrStr) -> BytesOrStr:
 
 def removeWhiteSpace(text: str) -> str:
 	"""
-	Replaces one or more consecutive white space characters with a single space.
+	Removes all white space characters.
 
 	Args:
 		text: The text to process.
@@ -188,7 +188,7 @@ def removeWhiteSpace(text: str) -> str:
 
 def simplified(text: str) -> str:
 	"""
-	Replaces one or more consecutive white space characters with a single space.
+	Replaces one or more consecutive white space characters with a single space, and trims beginning and end.
 
 	Args:
 		text: The text to process.
