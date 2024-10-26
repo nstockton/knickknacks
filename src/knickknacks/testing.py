@@ -1,6 +1,3 @@
-"""Stuff to do with testing."""
-
-
 # Copyright (c) 2024 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,6 +17,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
+"""Stuff to do with testing."""
 
 # Future Modules:
 from __future__ import annotations
