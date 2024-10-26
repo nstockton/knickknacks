@@ -24,8 +24,8 @@
 from __future__ import annotations
 
 # Built-in Modules:
+import re
 import sys
-from re import Match, Pattern
 from typing import TypeVar, Union
 
 
@@ -49,17 +49,17 @@ else:
 	from typing_extensions import Literal  # type: ignore[assignment]
 
 
-BytesOrStr = TypeVar("BytesOrStr", bytes, str)
-REGEX_MATCH: TypeAlias = Union[Match[str], None]
-REGEX_PATTERN: TypeAlias = Pattern[str]
-REGEX_BYTES_MATCH: TypeAlias = Union[Match[bytes], None]
-REGEX_BYTES_PATTERN: TypeAlias = Pattern[bytes]
+BytesOrStrType = TypeVar("BytesOrStrType", bytes, str)
+ReBytesMatchType: TypeAlias = Union[re.Match[bytes], None]
+ReBytesPatternType: TypeAlias = re.Pattern[bytes]
+ReMatchType: TypeAlias = Union[re.Match[str], None]
+RePatternType: TypeAlias = re.Pattern[str]
 
 
 __all__: list[str] = [
-	"BytesOrStr",
-	"REGEX_MATCH",
-	"REGEX_PATTERN",
-	"REGEX_BYTES_MATCH",
-	"REGEX_BYTES_PATTERN",
+	"BytesOrStrType",
+	"ReBytesMatchType",
+	"ReBytesPatternType",
+	"ReMatchType",
+	"RePatternType",
 ]

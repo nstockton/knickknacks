@@ -29,7 +29,7 @@ from typing import Union
 
 # Local Modules:
 from .strings import multiReplace
-from .typedef import REGEX_BYTES_PATTERN, REGEX_PATTERN
+from .typedef import ReBytesPatternType, RePatternType
 
 
 ESCAPE_XML_STR_ENTITIES: tuple[tuple[str, str], ...] = (
@@ -50,8 +50,8 @@ UNESCAPE_XML_BYTES_ENTITIES: tuple[tuple[bytes, bytes], ...] = tuple(
 	(bytes(first, "us-ascii"), bytes(second, "us-ascii")) for first, second in UNESCAPE_XML_STR_ENTITIES
 )
 
-UNESCAPE_XML_NUMERIC_BYTES_REGEX: REGEX_BYTES_PATTERN = re.compile(rb"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
-XML_ATTRIBUTE_REGEX: REGEX_PATTERN = re.compile(r"([\w-]+)(\s*=+\s*('[^']*'|\"[^\"]*\"|(?!['\"])[^\s]*))?")
+UNESCAPE_XML_NUMERIC_BYTES_REGEX: ReBytesPatternType = re.compile(rb"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
+XML_ATTRIBUTE_REGEX: RePatternType = re.compile(r"([\w-]+)(\s*=+\s*('[^']*'|\"[^\"]*\"|(?!['\"])[^\s]*))?")
 
 
 def escapeXMLString(text: str) -> str:
@@ -85,11 +85,12 @@ def getXMLAttributes(text: str) -> dict[str, Union[str, None]]:
 	attributes: dict[str, Union[str, None]] = {}
 	for name, rest, value in XML_ATTRIBUTE_REGEX.findall(text):
 		if not rest:
-			value = None
+			attributes[name.lower()] = None
 		elif value[:1] == "'" == value[-1:] or value[:1] == '"' == value[-1:]:
 			# The value is enclosed in single or double quotes.
-			value = value[1:-1]  # Strip the quotes from beginning and end.
-		attributes[name.lower()] = value
+			attributes[name.lower()] = value[1:-1]  # Strip the quotes from beginning and end.
+		else:
+			attributes[name.lower()] = value
 	return attributes
 
 

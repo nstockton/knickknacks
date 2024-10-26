@@ -24,14 +24,14 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import _imp
+import _imp  # NOQA: PLC2701
 import inspect
-import os
 import sys
-from functools import lru_cache
+from functools import cache
+from pathlib import Path
 
 
-@lru_cache(maxsize=None)
+@cache
 def getDirectoryPath(*args: str) -> str:
 	"""
 	Retrieves the path of the directory where the program is located.
@@ -40,16 +40,16 @@ def getDirectoryPath(*args: str) -> str:
 	If not frozen, path is based on the location of the module which called this function.
 
 	Args:
-		*args: Positional arguments to be passed to os.join after the directory path.
+		*args: Positional arguments to be passed to Path.joinpath after the directory path.
 
 	Returns:
 		The path.
 	"""
-	path: str = os.path.dirname(sys.executable if isFrozen() else inspect.stack()[1].filename)
-	return os.path.realpath(os.path.join(path, *args))
+	path: Path = Path(sys.executable if isFrozen() else inspect.stack()[1].filename).parent
+	return str(path.joinpath(*args).resolve())
 
 
-@lru_cache(maxsize=None)
+@cache
 def isFrozen() -> bool:
 	"""
 	Determines whether the program is running from a frozen copy or from source.
@@ -69,5 +69,5 @@ def touch(name: str) -> None:
 	Args:
 		name: the file name to touch.
 	"""
-	with open(name, "a"):
-		os.utime(name, None)
+	path: Path = Path(name).resolve()
+	path.touch()

@@ -46,4 +46,4 @@ class TestDataBytes(TestCase):
 
 	def test_latin2ascii(self) -> None:
 		with self.assertRaises(NotImplementedError):
-			databytes._latin2ascii(UnicodeError("junk"))
+			databytes._latin2ascii(UnicodeError("junk"))  # NOQA: SLF001

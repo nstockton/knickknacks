@@ -22,10 +22,10 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import os
 import sys
+from pathlib import Path
 from unittest import TestCase
-from unittest.mock import Mock, mock_open, patch
+from unittest.mock import Mock, patch
 
 # Knickknacks Modules:
 from knickknacks import platforms
@@ -35,14 +35,14 @@ class TestPlatforms(TestCase):
 	@patch("knickknacks.platforms.isFrozen")
 	def test_getDirectoryPath(self, mockIsFrozen: Mock) -> None:
 		subdirectory: tuple[str, ...] = ("level1", "level2")
-		frozenDirName: str = os.path.dirname(sys.executable)
-		frozenOutput: str = os.path.realpath(os.path.join(frozenDirName, *subdirectory))
+		frozenDirName: Path = Path(sys.executable).parent
+		frozenOutput: str = str(frozenDirName.joinpath(*subdirectory).resolve())
 		mockIsFrozen.return_value = True
 		self.assertEqual(platforms.getDirectoryPath(*subdirectory), frozenOutput)
 		platforms.getDirectoryPath.cache_clear()
 		# The location of the file which called the function, I.E. this file.
-		unfrozenDirName: str = os.path.dirname(__file__)
-		unfrozenOutput: str = os.path.realpath(os.path.join(unfrozenDirName, *subdirectory))
+		unfrozenDirName: Path = Path(__file__).parent
+		unfrozenOutput: str = str(unfrozenDirName.joinpath(*subdirectory).resolve())
 		mockIsFrozen.return_value = False
 		self.assertEqual(platforms.getDirectoryPath(*subdirectory), unfrozenOutput)
 
@@ -68,8 +68,7 @@ class TestPlatforms(TestCase):
 		mockSys.frozen = False
 		self.assertFalse(platforms.isFrozen())
 
-	@patch("knickknacks.platforms.open", mock_open(read_data="data"))
-	@patch("knickknacks.platforms.os")
-	def test_touch(self, mockOs: Mock) -> None:
+	@patch("knickknacks.platforms.Path.touch")
+	def test_touch(self, mockTouch: Mock) -> None:
 		platforms.touch("path_1")
-		mockOs.utime.assert_called_once_with("path_1", None)
+		mockTouch.assert_called_once()

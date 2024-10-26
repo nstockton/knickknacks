@@ -36,7 +36,7 @@ class TestNumbers(TestCase):
 
 	def test_floatToFraction(self) -> None:
 		self.assertEqual(numbers.floatToFraction(0.25), "1/4")
-		self.assertEqual(numbers.floatToFraction(3.14), "157/50")
+		self.assertEqual(numbers.floatToFraction(3.13), "313/100")
 		self.assertEqual(numbers.floatToFraction(2), "2")
 
 	def test_roundHalfAwayFromZero(self) -> None:

@@ -40,7 +40,10 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 	Returns:
 		The result between minimum and maximum.
 	"""
-	return minimum if value < minimum else maximum if value > maximum else value
+	# Note the ignore to the linter.
+	# The linter would have me use a combination of min and max functions inside each other.
+	# Using a ternary operator is much more readable, and according to timeit, faster.
+	return minimum if value < minimum else maximum if value > maximum else value  # NOQA: FURB136
 
 
 def floatToFraction(number: float) -> str:

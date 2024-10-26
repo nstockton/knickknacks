@@ -65,7 +65,7 @@ def humanSort(lst: Sequence[str]) -> list[str]:
 	)
 
 
-def lpadList(lst: Sequence[Any], padding: Any, count: int, fixed: bool = False) -> list[Any]:
+def lpadList(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
 	"""
 	Pad the left side of a list.
 
@@ -83,7 +83,7 @@ def lpadList(lst: Sequence[Any], padding: Any, count: int, fixed: bool = False) 
 	return [*[padding] * (count - len(lst)), *lst]
 
 
-def padList(lst: Sequence[Any], padding: Any, count: int, fixed: bool = False) -> list[Any]:
+def padList(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
 	"""
 	Pad the right side of a list.
 

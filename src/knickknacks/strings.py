@@ -30,15 +30,15 @@ from collections.abc import Callable, Sequence
 from typing import Any, Optional, Union
 
 # Local Modules:
-from .typedef import REGEX_PATTERN, BytesOrStr
+from .typedef import BytesOrStrType, RePatternType
 
 
-ANSI_COLOR_REGEX: REGEX_PATTERN = re.compile(r"\x1b\[[\d;]+m")
-INDENT_REGEX: REGEX_PATTERN = re.compile(r"^(?P<indent>\s*)(?P<text>.*)", flags=re.UNICODE)
-WHITE_SPACE_REGEX: REGEX_PATTERN = re.compile(r"\s+", flags=re.UNICODE)
+ANSI_COLOR_REGEX: RePatternType = re.compile(r"\x1b\[[\d;]+m")
+INDENT_REGEX: RePatternType = re.compile(r"^(?P<indent>\s*)(?P<text>.*)", flags=re.UNICODE)
+WHITE_SPACE_REGEX: RePatternType = re.compile(r"\s+", flags=re.UNICODE)
 # Use negative look-ahead to exclude the space character from the \s character class.
 # Another way to accomplish this would be to use negation (I.E. [^\S ]+).
-WHITE_SPACE_EXCEPT_SPACE_REGEX: REGEX_PATTERN = re.compile(r"(?:(?![ ])\s+)", flags=re.UNICODE)
+WHITE_SPACE_EXCEPT_SPACE_REGEX: RePatternType = re.compile(r"(?:(?![ ])\s+)", flags=re.UNICODE)
 
 
 def camelCase(text: str, delimiter: str) -> str:
@@ -150,9 +150,7 @@ def minIndent(text: str) -> str:
 	return min(lines, default="", key=len)
 
 
-def multiReplace(
-	data: BytesOrStr, replacements: Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]
-) -> BytesOrStr:
+def multiReplace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrStrType]]) -> BytesOrStrType:
 	"""
 	Performs multiple replacement operations on a string or bytes-like object.
 
@@ -163,8 +161,8 @@ def multiReplace(
 	Returns:
 		The text with all the replacements applied.
 	"""
-	for item in replacements:
-		data = data.replace(*item)
+	for old, new in replacements:
+		data = data.replace(old, new)
 	return data
 
 
@@ -177,6 +175,9 @@ def regexFuzzy(text: Union[str, Sequence[str]]) -> str:
 
 	Returns:
 		A regular expression string matching all or part of the text.
+
+	Raises:
+		TypeError: If text is neither a string nor sequence of strings.
 	"""
 	if not isinstance(text, (str, Sequence)):
 		raise TypeError("Text must be either a string or sequence of strings.")
@@ -185,20 +186,6 @@ def regexFuzzy(text: Union[str, Sequence[str]]) -> str:
 	if isinstance(text, str):
 		return "(".join(list(text)) + ")?" * (len(text) - 1)
 	return "|".join("(".join(list(item)) + ")?" * (len(item) - 1) for item in text)
-
-
-def removePrefix(text: BytesOrStr, prefix: BytesOrStr) -> BytesOrStr:
-	"""Backport of `removeprefix` from PEP-616 (Python 3.9+)."""
-	if text.startswith(prefix):
-		return text[len(prefix) :]
-	return text
-
-
-def removeSuffix(text: BytesOrStr, suffix: BytesOrStr) -> BytesOrStr:
-	"""Backport of `removesuffix` from PEP-616 (Python 3.9+)."""
-	if suffix and text.endswith(suffix):
-		return text[: -len(suffix)]
-	return text
 
 
 def removeWhiteSpace(text: str) -> str:

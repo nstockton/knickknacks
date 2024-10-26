@@ -96,20 +96,10 @@ class TestStrings(TestCase):
 		self.assertEqual(strings.regexFuzzy(["", ""]), "|")
 		self.assertEqual(strings.regexFuzzy("east"), "e(a(s(t)?)?)?")
 		self.assertEqual(strings.regexFuzzy(["east"]), "e(a(s(t)?)?)?")
-		self.assertEqual(strings.regexFuzzy(("east")), "e(a(s(t)?)?)?")
+		self.assertEqual(strings.regexFuzzy("east"), "e(a(s(t)?)?)?")
 		expectedOutput: str = "e(a(s(t)?)?)?|w(e(s(t)?)?)?"
 		self.assertEqual(strings.regexFuzzy(["east", "west"]), expectedOutput)
 		self.assertEqual(strings.regexFuzzy(("east", "west")), expectedOutput)
-
-	def test_removePrefix(self) -> None:
-		self.assertEqual(strings.removePrefix("hello", "he"), "llo")
-		self.assertEqual(strings.removePrefix("hello", "xx"), "hello")
-		self.assertEqual(strings.removePrefix("hello", ""), "hello")
-
-	def test_removeSuffix(self) -> None:
-		self.assertEqual(strings.removeSuffix("hello", "lo"), "hel")
-		self.assertEqual(strings.removeSuffix("hello", "xx"), "hello")
-		self.assertEqual(strings.removeSuffix("hello", ""), "hello")
 
 	def test_removeWhiteSpace(self) -> None:
 		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
