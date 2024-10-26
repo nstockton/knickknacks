@@ -37,6 +37,9 @@ from .typedef import REGEX_PATTERN, BytesOrStr
 ANSI_COLOR_REGEX: REGEX_PATTERN = re.compile(r"\x1b\[[\d;]+m")
 INDENT_REGEX: REGEX_PATTERN = re.compile(r"^(?P<indent>\s*)(?P<text>.*)", flags=re.UNICODE)
 WHITE_SPACE_REGEX: REGEX_PATTERN = re.compile(r"\s+", flags=re.UNICODE)
+# Use negative look-ahead to exclude the space character from the \s character class.
+# Another way to accomplish this would be to use negation (I.E. [^\S ]+).
+WHITE_SPACE_EXCEPT_SPACE_REGEX: REGEX_PATTERN = re.compile(r"(?:(?![ ])\s+)", flags=re.UNICODE)
 
 
 def camelCase(text: str, delimiter: str) -> str:
@@ -101,6 +104,32 @@ def formatDocString(
 		wrappedLines.append(linePrefix + f"\n{linePrefix}".join(lines))
 	# Indent docstring lines with the prefix.
 	return textwrap.indent("\n".join(wrappedLines), prefix=prefix or "")
+
+
+def hasWhiteSpace(text: str) -> bool:
+	"""
+	Determines if string contains white space.
+
+	Args:
+		text: The text to process.
+
+	Returns:
+		True if found, False otherwise.
+	"""
+	return WHITE_SPACE_REGEX.search(text) is not None
+
+
+def hasWhiteSpaceExceptSpace(text: str) -> bool:
+	"""
+	Determines if string contains white space other than space.
+
+	Args:
+		text: The text to process.
+
+	Returns:
+		True if found, False otherwise.
+	"""
+	return WHITE_SPACE_EXCEPT_SPACE_REGEX.search(text) is not None
 
 
 def minIndent(text: str) -> str:
@@ -184,6 +213,19 @@ def removeWhiteSpace(text: str) -> str:
 		The simplified version of the text.
 	"""
 	return WHITE_SPACE_REGEX.sub("", text)
+
+
+def removeWhiteSpaceExceptSpace(text: str) -> str:
+	"""
+	Removes all white space characters except for space.
+
+	Args:
+		text: The text to process.
+
+	Returns:
+		The simplified version of the text.
+	"""
+	return WHITE_SPACE_EXCEPT_SPACE_REGEX.sub("", text)
 
 
 def simplified(text: str) -> str:

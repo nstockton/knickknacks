@@ -64,6 +64,18 @@ class TestStrings(TestCase):
 			strings.formatDocString(testFunction, width, prefix="  "), expectedOutputIndentTwoSpace
 		)
 
+	def test_hasWhiteSpace(self) -> None:
+		ShouldBeTrue: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		shouldBeFalse: str = "HelloworldThisisatest."
+		self.assertTrue(strings.hasWhiteSpace(ShouldBeTrue))
+		self.assertFalse(strings.hasWhiteSpace(shouldBeFalse))
+
+	def test_hasWhiteSpaceExceptSpace(self) -> None:
+		ShouldBeTrue: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		shouldBeFalse: str = "Hello worldThis  isatest. "
+		self.assertTrue(strings.hasWhiteSpaceExceptSpace(ShouldBeTrue))
+		self.assertFalse(strings.hasWhiteSpaceExceptSpace(shouldBeFalse))
+
 	def test_minIndent(self) -> None:
 		self.assertEqual(strings.minIndent("hello\nworld"), "")
 		self.assertEqual(strings.minIndent("\thello\n\t\tworld"), "\t")
@@ -103,6 +115,11 @@ class TestStrings(TestCase):
 		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
 		expected: str = "HelloworldThisisatest."
 		self.assertEqual(strings.removeWhiteSpace(sent), expected)
+
+	def test_removeWhiteSpaceExceptSpace(self) -> None:
+		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		expected: str = "Hello worldThis  isatest. "
+		self.assertEqual(strings.removeWhiteSpaceExceptSpace(sent), expected)
 
 	def test_simplified(self) -> None:
 		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
