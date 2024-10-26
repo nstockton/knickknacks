@@ -58,8 +58,12 @@ RePatternType: TypeAlias = re.Pattern[str]
 
 __all__: list[str] = [
 	"BytesOrStrType",
+	"Literal",
 	"ReBytesMatchType",
 	"ReBytesPatternType",
 	"ReMatchType",
 	"RePatternType",
+	"Self",
+	"TypeAlias",
+	"override",
 ]
