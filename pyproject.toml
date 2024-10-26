@@ -125,6 +125,7 @@
 		"I",  # ISort will handle imports instead of Ruff.
 		"W191",  # Indentation contains tabs.
 	]
+	typing-modules = ["knickknacks.typedef"]
 	unfixable = [
 		"B",  # Flake8-bugbear.
 	]
@@ -135,6 +136,7 @@
 [tool.ruff.lint.per-file-ignores]
 	"**/__init__.py" = ["D1"]
 	"./tests/**" = ["D1"]
+	"**/typedef.py" = ["F401"]
 
 [tool.ruff.lint.pydocstyle]
 	convention = "google"
@@ -156,7 +158,9 @@
 
 [tool.coverage.run]
 	source = ["knickknacks"]
-	omit = []
+	omit = [
+		"src/knickknacks/typedef.py",
+	]
 
 [tool.isort]
 	line_length = 110  # The max length of an import line (used for wrapping long imports).
