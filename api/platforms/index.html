@@ -541,7 +541,7 @@ If not frozen, path is based on the location of the module which called this fun
       <tr>
         <td><code>*args</code></td>
         <td><code>str</code></td>
-        <td><p>Positional arguments to be passed to os.join after the directory path.</p></td>
+        <td><p>Positional arguments to be passed to Path.joinpath after the directory path.</p></td>
         <td><code>()</code></td>
       </tr>
   </tbody>
@@ -563,7 +563,7 @@ If not frozen, path is based on the location of the module which called this fun
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/platforms.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@cache</span>
 <span class="k">def</span> <span class="nf">getDirectoryPath</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Retrieves the path of the directory where the program is located.</span>
@@ -572,13 +572,13 @@ If not frozen, path is based on the location of the module which called this fun
 <span class="sd">	If not frozen, path is based on the location of the module which called this function.</span>
 
 <span class="sd">	Args:</span>
-<span class="sd">		*args: Positional arguments to be passed to os.join after the directory path.</span>
+<span class="sd">		*args: Positional arguments to be passed to Path.joinpath after the directory path.</span>
 
 <span class="sd">	Returns:</span>
 <span class="sd">		The path.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span> <span class="k">if</span> <span class="n">isFrozen</span><span class="p">()</span> <span class="k">else</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-	<span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
+	<span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span> <span class="k">if</span> <span class="n">isFrozen</span><span class="p">()</span> <span class="k">else</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+	<span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
 </code></pre></div>
         </details>
     </div>
@@ -618,7 +618,7 @@ If not frozen, path is based on the location of the module which called this fun
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/platforms.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@cache</span>
 <span class="k">def</span> <span class="nf">isFrozen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Determines whether the program is running from a frozen copy or from source.</span>
@@ -680,8 +680,8 @@ If not frozen, path is based on the location of the module which called this fun
 <span class="sd">	Args:</span>
 <span class="sd">		name: the file name to touch.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">):</span>
-		<span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+	<span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+	<span class="n">path</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
 </code></pre></div>
         </details>
     </div>

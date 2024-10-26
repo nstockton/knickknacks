@@ -392,20 +392,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#knickknacks.strings.removePrefix" class="md-nav__link">
-    removePrefix()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#knickknacks.strings.removeSuffix" class="md-nav__link">
-    removeSuffix()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#knickknacks.strings.removeWhiteSpace" class="md-nav__link">
     removeWhiteSpace()
   </a>
@@ -562,20 +548,6 @@
         <li class="md-nav__item">
   <a href="#knickknacks.strings.regexFuzzy" class="md-nav__link">
     regexFuzzy()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#knickknacks.strings.removePrefix" class="md-nav__link">
-    removePrefix()
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#knickknacks.strings.removeSuffix" class="md-nav__link">
-    removeSuffix()
   </a>
   
 </li>
@@ -1089,13 +1061,13 @@
   <tbody>
       <tr>
         <td><code>data</code></td>
-        <td><code>BytesOrStr</code></td>
+        <td><code>BytesOrStrType</code></td>
         <td><p>The text to perform the replacements on.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>replacements</code></td>
-        <td><code>Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]</code></td>
+        <td><code>Sequence[Sequence[BytesOrStrType]]</code></td>
         <td><p>A sequence of tuples, each containing the text to match and the replacement.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1111,16 +1083,14 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>BytesOrStr</code></td>
+      <td><code>BytesOrStrType</code></td>
       <td><p>The text with all the replacements applied.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/strings.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">multiReplace</span><span class="p">(</span>
-	<span class="n">data</span><span class="p">:</span> <span class="n">BytesOrStr</span><span class="p">,</span> <span class="n">replacements</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BytesOrStr</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">multiReplace</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">BytesOrStrType</span><span class="p">,</span> <span class="n">replacements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">BytesOrStrType</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">BytesOrStrType</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Performs multiple replacement operations on a string or bytes-like object.</span>
 
@@ -1131,8 +1101,8 @@
 <span class="sd">	Returns:</span>
 <span class="sd">		The text with all the replacements applied.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">replacements</span><span class="p">:</span>
-		<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="ow">in</span> <span class="n">replacements</span><span class="p">:</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">)</span>
 	<span class="k">return</span> <span class="n">data</span>
 </code></pre></div>
         </details>
@@ -1190,6 +1160,21 @@
     </tr>
   </tbody>
 </table>
+<p><strong>Exceptions:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>TypeError</code></td>
+        <td><p>If text is neither a string nor sequence of strings.</p></td>
+      </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/strings.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">regexFuzzy</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -1201,6 +1186,9 @@
 
 <span class="sd">	Returns:</span>
 <span class="sd">		A regular expression string matching all or part of the text.</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		TypeError: If text is neither a string nor sequence of strings.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)):</span>
 		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Text must be either a string or sequence of strings.&quot;</span><span class="p">)</span>
@@ -1209,64 +1197,6 @@
 	<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
 		<span class="k">return</span> <span class="s2">&quot;(&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">text</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;)?&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 	<span class="k">return</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;)?&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">text</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h2 id="knickknacks.strings.removePrefix" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Function</span> <span class="n">removePrefix</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span></code>
-
-
-<a href="#knickknacks.strings.removePrefix" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Backport of <code>removeprefix</code> from PEP-616 (Python 3.9+).</p>
-
-        <details class="quote">
-          <summary>Source code in <code>knickknacks/strings.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removePrefix</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">BytesOrStr</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="n">BytesOrStr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BytesOrStr</span><span class="p">:</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;Backport of `removeprefix` from PEP-616 (Python 3.9+).&quot;&quot;&quot;</span>
-	<span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
-		<span class="k">return</span> <span class="n">text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="p">:]</span>
-	<span class="k">return</span> <span class="n">text</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-function">
-
-
-
-<h2 id="knickknacks.strings.removeSuffix" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Function</span> <span class="n">removeSuffix</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span></code>
-
-
-<a href="#knickknacks.strings.removeSuffix" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents ">
-
-      <p>Backport of <code>removesuffix</code> from PEP-616 (Python 3.9+).</p>
-
-        <details class="quote">
-          <summary>Source code in <code>knickknacks/strings.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeSuffix</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">BytesOrStr</span><span class="p">,</span> <span class="n">suffix</span><span class="p">:</span> <span class="n">BytesOrStr</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BytesOrStr</span><span class="p">:</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;Backport of `removesuffix` from PEP-616 (Python 3.9+).&quot;&quot;&quot;</span>
-	<span class="k">if</span> <span class="n">suffix</span> <span class="ow">and</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">):</span>
-		<span class="k">return</span> <span class="n">text</span><span class="p">[:</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">suffix</span><span class="p">)]</span>
-	<span class="k">return</span> <span class="n">text</span>
 </code></pre></div>
         </details>
     </div>
