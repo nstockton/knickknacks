@@ -9,11 +9,16 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import enum
 import io
 import pathlib
 import sys
-from typing import Optional, Self
+from typing import Optional
+
+
+if sys.version_info >= (3, 11):
+	from enum import StrEnum
+else:
+	from backports.strenum import StrEnum
 
 
 class Path(pathlib.Path):
@@ -76,44 +81,6 @@ class Path(pathlib.Path):
 			with self.open(mode="w", encoding=encoding, errors=errors, newline=newline) as f:
 				num_written = f.write(data)
 		return num_written
-
-
-class StrEnumBackport(str, enum.Enum):
-	"""
-	An Enum where members are also (and must be) strings.
-
-	Backported from Python 3.11.
-	"""
-
-	def __str__(self) -> str:
-		return str(self.value)
-
-	def __new__(cls: type[Self], *values: str) -> Self:
-		if len(values) > 3:
-			raise TypeError(f"too many arguments for str(): {values!r}")
-		if len(values) == 1 and not isinstance(values[0], str):
-			raise TypeError(f"{values[0]!r} is not a string")
-		if len(values) >= 2 and not isinstance(values[1], str):
-			raise TypeError(f"encoding must be a string, not {values[1]!r}")
-		if len(values) == 3 and not isinstance(values[2], str):
-			raise TypeError(f"errors must be a string, not {values[2]!r}")
-		value = str(*values)
-		member = str.__new__(cls, value)
-		member._value_ = value
-		return member
-
-	@staticmethod
-	def _generate_next_value_(name: str, start: int, count: int, last_values: list[str]) -> str:
-		"""
-		Retrieves the lower-cased version of the member name.
-
-		Returns:
-			The member name, in lower-case.
-		"""
-		return name.lower()
-
-
-StrEnum = enum.StrEnum if sys.version_info >= (3, 11) else StrEnumBackport
 
 
 __all__: list[str] = [
