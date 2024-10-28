@@ -153,6 +153,7 @@
 	"**/__init__.py" = ["D1"]
 	"./tests/**" = ["D1", "PLR6301"]
 	"**/typedef.py" = ["F401"]
+	"./src/knickknacks/backports.py" = ["PLR2004"]  # Magic value used in comparison.
 	"./src/knickknacks/numbers.py" = ["A005"]  # Module is shadowing a Python builtin module.
 	"./src/knickknacks/xml.py" = ["A005"]  # Module is shadowing a Python builtin module.
 
@@ -182,6 +183,7 @@
 [tool.coverage.run]
 	source = ["knickknacks"]
 	omit = [
+		"src/knickknacks/backports.py",
 		"src/knickknacks/typedef.py",
 	]
 
