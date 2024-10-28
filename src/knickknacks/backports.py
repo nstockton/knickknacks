@@ -9,7 +9,6 @@
 from __future__ import annotations
 
 # Built-in Modules:
-import io
 import pathlib
 import sys
 from typing import Optional
@@ -45,7 +44,6 @@ class Path(pathlib.Path):
 		if sys.version_info >= (3, 13):
 			text = super().read_text(encoding, errors, newline)
 		else:
-			encoding = io.text_encoding(encoding)
 			with self.open(mode="r", encoding=encoding, errors=errors, newline=newline) as f:
 				text = f.read()
 		return text
@@ -75,9 +73,8 @@ class Path(pathlib.Path):
 		if sys.version_info >= (3, 10):
 			num_written = super().write_text(data, encoding, errors, newline)
 		else:
-			if not isinstance(data, str):  # type: ignore[unreachable]
+			if not isinstance(data, str):
 				raise TypeError(f"data must be str, not {data.__class__.__name__}")
-			encoding = io.text_encoding(encoding)
 			with self.open(mode="w", encoding=encoding, errors=errors, newline=newline) as f:
 				num_written = f.write(data)
 		return num_written
