@@ -30,6 +30,9 @@ import sys
 from functools import cache
 from pathlib import Path
 
+# Local Modules:
+from .utils import getFunctionField
+
 
 @cache
 def getDirectoryPath(*args: str) -> str:
@@ -45,7 +48,11 @@ def getDirectoryPath(*args: str) -> str:
 	Returns:
 		The path.
 	"""
-	path: Path = Path(sys.executable if isFrozen() else inspect.stack()[1].filename).parent
+	if isFrozen():
+		path = Path(sys.executable).parent
+	else:
+		frame = getFunctionField(1)
+		path = Path(inspect.getabsfile(frame)).parent
 	return str(path.joinpath(*args).resolve())
 
 

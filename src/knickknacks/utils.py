@@ -24,10 +24,51 @@
 from __future__ import annotations
 
 # Built-in Modules:
+import inspect
+import itertools
 import shutil
 import textwrap
 from collections.abc import Sequence
 from pydoc import pager
+from types import FrameType
+
+
+def getFunctionField(back: int = 0) -> FrameType:
+	"""
+	Retrieves the stack field for the function which called this function.
+
+	Args:
+		back: The number of frames to go back.
+
+	Returns:
+		The function stack field.
+
+	Raises:
+		AttributeError: Unable to get reference to function.
+	"""
+	counter = itertools.count()
+	frame = inspect.currentframe()
+	while frame is not None:  # Note that this will always perform at least 1 loop.
+		if next(counter) > back:
+			return frame
+		frame = frame.f_back
+	raise AttributeError("Unable to get reference to function.")
+
+
+def getFunctionName(back: int = 0) -> str:
+	"""
+	Retrieves the name of the function which called this function.
+
+	Args:
+		back: The number of frames to go back.
+
+	Returns:
+		The function name, or an empty string if not found.
+	"""
+	try:
+		return getFunctionField(back + 1).f_code.co_name
+	except AttributeError:
+		return ""
 
 
 def page(lines: Sequence[str]) -> None:

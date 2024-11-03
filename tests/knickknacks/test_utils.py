@@ -22,7 +22,9 @@
 from __future__ import annotations
 
 # Built-in Modules:
+import inspect
 import os
+import sys
 import textwrap
 from unittest import TestCase
 from unittest.mock import Mock, patch
@@ -32,6 +34,23 @@ from knickknacks import utils
 
 
 class TestUtils(TestCase):
+	def test_getFunctionField(self) -> None:
+		thisFunctionField = inspect.currentframe()
+		if thisFunctionField is None:
+			raise TypeError("thisFunctionField is None.")
+		thisFunctionName = thisFunctionField.f_code.co_name
+		self.assertEqual(utils.getFunctionField().f_code.co_name, thisFunctionName)
+		with self.assertRaises(AttributeError):
+			utils.getFunctionField(sys.getrecursionlimit() * 2)
+
+	def test_getFunctionName(self) -> None:
+		thisFunctionField = inspect.currentframe()
+		if thisFunctionField is None:
+			raise TypeError("thisFunctionField is None.")
+		thisFunctionName = thisFunctionField.f_code.co_name
+		self.assertEqual(utils.getFunctionName(), thisFunctionName)
+		self.assertEqual(utils.getFunctionName(sys.getrecursionlimit() * 2), "")
+
 	@patch("knickknacks.utils.pager")
 	@patch("knickknacks.utils.shutil")
 	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
