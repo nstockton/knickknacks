@@ -26,7 +26,8 @@ from __future__ import annotations
 # Built-in Modules:
 import re
 import sys
-from typing import TypeVar, Union
+from collections.abc import Mapping
+from typing import Any, TypeVar, Union
 
 
 if sys.version_info >= (3, 12):
@@ -38,9 +39,9 @@ if sys.version_info >= (3, 11):
 else:
 	from typing_extensions import Self
 if sys.version_info >= (3, 10):
-	from typing import TypeAlias
+	from typing import ParamSpec, TypeAlias
 else:
-	from typing_extensions import TypeAlias
+	from typing_extensions import ParamSpec, TypeAlias
 # Literal from typing module has various issues in different Python versions, see:
 # https://typing-extensions.readthedocs.io/en/latest/#Literal
 if sys.version_info >= (3, 10, 1) or (3, 9, 8) <= sys.version_info < (3, 10):
@@ -49,6 +50,7 @@ else:
 	from typing_extensions import Literal  # type: ignore[assignment]
 
 
+AnyMappingType: TypeAlias = Mapping[Any, Any]
 BytesOrStrType = TypeVar("BytesOrStrType", bytes, str)
 ReBytesMatchType: TypeAlias = Union[re.Match[bytes], None]
 ReBytesPatternType: TypeAlias = re.Pattern[bytes]
@@ -57,8 +59,10 @@ RePatternType: TypeAlias = re.Pattern[str]
 
 
 __all__: list[str] = [
+	"AnyMappingType",
 	"BytesOrStrType",
 	"Literal",
+	"ParamSpec",
 	"ReBytesMatchType",
 	"ReBytesPatternType",
 	"ReMatchType",
