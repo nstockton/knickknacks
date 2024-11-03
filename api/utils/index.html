@@ -371,6 +371,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#knickknacks.utils.getFunctionField" class="md-nav__link">
+    getFunctionField()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knickknacks.utils.getFunctionName" class="md-nav__link">
+    getFunctionName()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#knickknacks.utils.page" class="md-nav__link">
     page()
   </a>
@@ -434,6 +448,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#knickknacks.utils.getFunctionField" class="md-nav__link">
+    getFunctionField()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knickknacks.utils.getFunctionName" class="md-nav__link">
+    getFunctionName()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#knickknacks.utils.page" class="md-nav__link">
     page()
   </a>
@@ -480,6 +508,171 @@
 
 
 
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="knickknacks.utils.getFunctionField" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">getFunctionField</span><span class="p">(</span><span class="n">back</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+
+<a href="#knickknacks.utils.getFunctionField" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Retrieves the stack field for the function which called this function.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>back</code></td>
+        <td><code>int</code></td>
+        <td><p>The number of frames to go back.</p></td>
+        <td><code>0</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>FrameType</code></td>
+      <td><p>The function stack field.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>AttributeError</code></td>
+        <td><p>Unable to get reference to function.</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>knickknacks/utils.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getFunctionField</span><span class="p">(</span><span class="n">back</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FrameType</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Retrieves the stack field for the function which called this function.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		back: The number of frames to go back.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		The function stack field.</span>
+
+<span class="sd">	Raises:</span>
+<span class="sd">		AttributeError: Unable to get reference to function.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">counter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+	<span class="n">frame</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span>
+	<span class="k">while</span> <span class="n">frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Note that this will always perform at least 1 loop.</span>
+		<span class="k">if</span> <span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">back</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">frame</span>
+		<span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_back</span>
+	<span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Unable to get reference to function.&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="knickknacks.utils.getFunctionName" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">getFunctionName</span><span class="p">(</span><span class="n">back</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+
+<a href="#knickknacks.utils.getFunctionName" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Retrieves the name of the function which called this function.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>back</code></td>
+        <td><code>int</code></td>
+        <td><p>The number of frames to go back.</p></td>
+        <td><code>0</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>The function name, or an empty string if not found.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>knickknacks/utils.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getFunctionName</span><span class="p">(</span><span class="n">back</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Retrieves the name of the function which called this function.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		back: The number of frames to go back.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		The function name, or an empty string if not found.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">try</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">getFunctionField</span><span class="p">(</span><span class="n">back</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span>
+	<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+		<span class="k">return</span> <span class="s2">&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

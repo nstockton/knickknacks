@@ -577,7 +577,11 @@ If not frozen, path is based on the location of the module which called this fun
 <span class="sd">	Returns:</span>
 <span class="sd">		The path.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span> <span class="k">if</span> <span class="n">isFrozen</span><span class="p">()</span> <span class="k">else</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+	<span class="k">if</span> <span class="n">isFrozen</span><span class="p">():</span>
+		<span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">frame</span> <span class="o">=</span> <span class="n">getFunctionField</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+		<span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getabsfile</span><span class="p">(</span><span class="n">frame</span><span class="p">))</span><span class="o">.</span><span class="n">parent</span>
 	<span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
 </code></pre></div>
         </details>
