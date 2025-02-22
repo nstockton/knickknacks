@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,93 +30,95 @@ from knickknacks import strings
 
 
 class TestStrings(TestCase):
-	def test_camelCase(self) -> None:
-		self.assertEqual(strings.camelCase("", "_"), "")
-		self.assertEqual(strings.camelCase("this_is_a_test", "_"), "thisIsATest")
+	def test_camel_case(self) -> None:
+		self.assertEqual(strings.camel_case("", "_"), "")
+		self.assertEqual(strings.camel_case("this_is_a_test", "_"), "thisIsATest")
 
-	def test_formatDocString(self) -> None:
-		docString: str = (
+	def test_format_docstring(self) -> None:
+		docstring: str = (
 			"\nTest Doc String\n"
 			+ "This is the first line below the title.\n"
 			+ "\tThis is an indented line below the first. "
 			+ "Let's make it long so we can check if word wrapping works.\n"
 			+ "This is the final line, which should be at indention level 0.\n"
 		)
-		expectedOutput: str = (
+		expected_output: str = (
 			"Test Doc String\n"
 			+ "This is the first line below the title.\n"
 			+ "\tThis is an indented line below the first. Let's make it long so we can check\n"
 			+ "\tif word wrapping works.\n"
 			+ "This is the final line, which should be at indention level 0."
 		)
-		testFunction: Callable[[], None] = lambda: None  # NOQA: E731
-		testFunction.__doc__ = docString
-		expectedOutputIndentTwoSpace: str = "\n".join(
-			"  " + line.replace("\t", "  ") for line in expectedOutput.splitlines()
+		test_function: Callable[[], None] = lambda: None  # NOQA: E731
+		test_function.__doc__ = docstring
+		expected_output_indent_two_space: str = "\n".join(
+			"  " + line.replace("\t", "  ") for line in expected_output.splitlines()
 		)
 		width: int = 79
-		self.assertEqual(strings.formatDocString(docString, width), expectedOutput)
-		self.assertEqual(strings.formatDocString(docString, width, prefix=""), expectedOutput)
-		self.assertEqual(strings.formatDocString(docString, width, prefix="  "), expectedOutputIndentTwoSpace)
-		self.assertEqual(strings.formatDocString(testFunction, width), expectedOutput)
-		self.assertEqual(strings.formatDocString(testFunction, width, prefix=""), expectedOutput)
+		self.assertEqual(strings.format_docstring(docstring, width), expected_output)
+		self.assertEqual(strings.format_docstring(docstring, width, prefix=""), expected_output)
 		self.assertEqual(
-			strings.formatDocString(testFunction, width, prefix="  "), expectedOutputIndentTwoSpace
+			strings.format_docstring(docstring, width, prefix="  "), expected_output_indent_two_space
+		)
+		self.assertEqual(strings.format_docstring(test_function, width), expected_output)
+		self.assertEqual(strings.format_docstring(test_function, width, prefix=""), expected_output)
+		self.assertEqual(
+			strings.format_docstring(test_function, width, prefix="  "), expected_output_indent_two_space
 		)
 
-	def test_hasWhiteSpace(self) -> None:
-		ShouldBeTrue: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
-		shouldBeFalse: str = "HelloworldThisisatest."
-		self.assertTrue(strings.hasWhiteSpace(ShouldBeTrue))
-		self.assertFalse(strings.hasWhiteSpace(shouldBeFalse))
+	def test_has_white_space(self) -> None:
+		should_be_true: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		should_be_false: str = "HelloworldThisisatest."
+		self.assertTrue(strings.has_white_space(should_be_true))
+		self.assertFalse(strings.has_white_space(should_be_false))
 
-	def test_hasWhiteSpaceExceptSpace(self) -> None:
-		ShouldBeTrue: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
-		shouldBeFalse: str = "Hello worldThis  isatest. "
-		self.assertTrue(strings.hasWhiteSpaceExceptSpace(ShouldBeTrue))
-		self.assertFalse(strings.hasWhiteSpaceExceptSpace(shouldBeFalse))
+	def test_has_white_space_except_space(self) -> None:
+		should_be_true: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
+		should_be_false: str = "Hello worldThis  isatest. "
+		self.assertTrue(strings.has_white_space_except_space(should_be_true))
+		self.assertFalse(strings.has_white_space_except_space(should_be_false))
 
-	def test_minIndent(self) -> None:
-		self.assertEqual(strings.minIndent("hello\nworld"), "")
-		self.assertEqual(strings.minIndent("\thello\n\t\tworld"), "\t")
+	def test_min_indent(self) -> None:
+		self.assertEqual(strings.min_indent("hello\nworld"), "")
+		self.assertEqual(strings.min_indent("\thello\n\t\tworld"), "\t")
 
-	def test_multiReplace(self) -> None:
+	def test_multi_replace(self) -> None:
 		replacements: tuple[tuple[str, str], ...] = (("ll", "yy"), ("h", "x"), ("o", "z"))
 		text: str = "hello world"
-		expectedOutput: str = "xeyyz wzrld"
-		self.assertEqual(strings.multiReplace(text, replacements), expectedOutput)
-		self.assertEqual(strings.multiReplace(text, ()), text)
+		expected_output: str = "xeyyz wzrld"
+		self.assertEqual(strings.multi_replace(text, replacements), expected_output)
+		self.assertEqual(strings.multi_replace(text, ()), text)
 
-	def test_regexFuzzy(self) -> None:
+	def test_regex_fuzzy(self) -> None:
 		with self.assertRaises(TypeError):
-			strings.regexFuzzy(None)  # type: ignore[arg-type]
-		self.assertEqual(strings.regexFuzzy(""), "")
-		self.assertEqual(strings.regexFuzzy([]), "")
-		self.assertEqual(strings.regexFuzzy([""]), "")
-		self.assertEqual(strings.regexFuzzy(["", ""]), "|")
-		self.assertEqual(strings.regexFuzzy("east"), "e(a(s(t)?)?)?")
-		self.assertEqual(strings.regexFuzzy(["east"]), "e(a(s(t)?)?)?")
-		self.assertEqual(strings.regexFuzzy("east"), "e(a(s(t)?)?)?")
-		expectedOutput: str = "e(a(s(t)?)?)?|w(e(s(t)?)?)?"
-		self.assertEqual(strings.regexFuzzy(["east", "west"]), expectedOutput)
-		self.assertEqual(strings.regexFuzzy(("east", "west")), expectedOutput)
+			strings.regex_fuzzy(None)  # type: ignore[arg-type]
+		self.assertEqual(strings.regex_fuzzy(""), "")
+		self.assertEqual(strings.regex_fuzzy([]), "")
+		self.assertEqual(strings.regex_fuzzy([""]), "")
+		self.assertEqual(strings.regex_fuzzy(["", ""]), "|")
+		self.assertEqual(strings.regex_fuzzy("east"), "e(a(s(t)?)?)?")
+		self.assertEqual(strings.regex_fuzzy(["east"]), "e(a(s(t)?)?)?")
+		self.assertEqual(strings.regex_fuzzy("east"), "e(a(s(t)?)?)?")
+		expected_output: str = "e(a(s(t)?)?)?|w(e(s(t)?)?)?"
+		self.assertEqual(strings.regex_fuzzy(["east", "west"]), expected_output)
+		self.assertEqual(strings.regex_fuzzy(("east", "west")), expected_output)
 
-	def test_removeWhiteSpace(self) -> None:
+	def test_remove_white_space(self) -> None:
 		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
 		expected: str = "HelloworldThisisatest."
-		self.assertEqual(strings.removeWhiteSpace(sent), expected)
+		self.assertEqual(strings.remove_white_space(sent), expected)
 
-	def test_removeWhiteSpaceExceptSpace(self) -> None:
+	def test_remove_white_space_except_space(self) -> None:
 		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
 		expected: str = "Hello worldThis  isatest. "
-		self.assertEqual(strings.removeWhiteSpaceExceptSpace(sent), expected)
+		self.assertEqual(strings.remove_white_space_except_space(sent), expected)
 
 	def test_simplified(self) -> None:
 		sent: str = "\tHello world\r\nThis  is\ta\r\n\r\ntest. "
 		expected: str = "Hello world This is a test."
 		self.assertEqual(strings.simplified(sent), expected)
 
-	def test_stripAnsi(self) -> None:
+	def test_strip_ansi(self) -> None:
 		sent: str = "\x1b[32mhello\x1b[0m"
 		expected: str = "hello"
-		self.assertEqual(strings.stripAnsi(sent), expected)
+		self.assertEqual(strings.strip_ansi(sent), expected)

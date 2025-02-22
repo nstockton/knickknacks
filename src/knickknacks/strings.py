@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -41,9 +41,9 @@ WHITE_SPACE_REGEX: RePatternType = re.compile(r"\s+", flags=re.UNICODE)
 WHITE_SPACE_EXCEPT_SPACE_REGEX: RePatternType = re.compile(r"(?:(?![ ])\s+)", flags=re.UNICODE)
 
 
-def camelCase(text: str, delimiter: str) -> str:
+def camel_case(text: str, delimiter: str) -> str:
 	"""
-	converts text to camel case.
+	Converts text to camel case.
 
 	Args:
 		text: The text to be converted.
@@ -56,56 +56,58 @@ def camelCase(text: str, delimiter: str) -> str:
 	return "".join((*map(str.lower, words[:1]), *map(str.title, words[1:])))
 
 
-def formatDocString(
-	functionOrString: Union[str, Callable[..., Any]], width: int = 79, prefix: Optional[str] = None
+def format_docstring(
+	function_or_string: Union[str, Callable[..., Any]], width: int = 79, prefix: Optional[str] = None
 ) -> str:
 	"""
 	Formats a docstring for displaying.
 
 	Args:
-		functionOrString: The function containing the docstring, or the docstring its self.
+		function_or_string: The function containing the docstring, or the docstring its self.
 		width: The number of characters to word wrap each line to.
 		prefix: One or more characters to use for indention.
 
 	Returns:
 		The formatted docstring.
 	"""
-	docString = getattr(functionOrString, "__doc__", "") if callable(functionOrString) else functionOrString
+	docstring = (
+		getattr(function_or_string, "__doc__", "") if callable(function_or_string) else function_or_string
+	)
 	# Remove any empty lines from the beginning, while keeping indention.
-	docString = docString.lstrip("\r\n")
-	match = INDENT_REGEX.search(docString)
+	docstring = docstring.lstrip("\r\n")
+	match = INDENT_REGEX.search(docstring)
 	if match is not None and not match.group("indent"):
 		# The first line was not indented.
 		# Prefix the first line with the white space from the subsequent, non-empty
 		# line with the least amount of indention.
 		# This is needed so that textwrap.dedent will work.
-		docString = minIndent("\n".join(docString.splitlines()[1:])) + docString
-	docString = textwrap.dedent(docString)  # Remove common indention from lines.
-	docString = docString.rstrip()  # Remove trailing white space from the end of the docstring.
+		docstring = min_indent("\n".join(docstring.splitlines()[1:])) + docstring
+	docstring = textwrap.dedent(docstring)  # Remove common indention from lines.
+	docstring = docstring.rstrip()  # Remove trailing white space from the end of the docstring.
 	# Word wrap long lines, while maintaining existing structure.
-	wrappedLines = []
-	indentLevel = 0
-	lastIndent = ""
-	for line in docString.splitlines():
+	wrapped_lines = []
+	indent_level = 0
+	last_indent = ""
+	for line in docstring.splitlines():
 		match = INDENT_REGEX.search(line)
 		if match is None:  # pragma: no cover
 			continue
 		indent, text = match.groups()
-		if len(indent) > len(lastIndent):
-			indentLevel += 1
-		elif len(indent) < len(lastIndent):
-			indentLevel -= 1
-		lastIndent = indent
-		linePrefix = prefix * indentLevel if prefix else indent
+		if len(indent) > len(last_indent):
+			indent_level += 1
+		elif len(indent) < len(last_indent):
+			indent_level -= 1
+		last_indent = indent
+		line_prefix = prefix * indent_level if prefix else indent
 		lines = textwrap.wrap(
-			text, width=width - len(linePrefix), break_long_words=False, break_on_hyphens=False
+			text, width=width - len(line_prefix), break_long_words=False, break_on_hyphens=False
 		)
-		wrappedLines.append(linePrefix + f"\n{linePrefix}".join(lines))
+		wrapped_lines.append(line_prefix + f"\n{line_prefix}".join(lines))
 	# Indent docstring lines with the prefix.
-	return textwrap.indent("\n".join(wrappedLines), prefix=prefix or "")
+	return textwrap.indent("\n".join(wrapped_lines), prefix=prefix or "")
 
 
-def hasWhiteSpace(text: str) -> bool:
+def has_white_space(text: str) -> bool:
 	"""
 	Determines if string contains white space.
 
@@ -118,7 +120,7 @@ def hasWhiteSpace(text: str) -> bool:
 	return WHITE_SPACE_REGEX.search(text) is not None
 
 
-def hasWhiteSpaceExceptSpace(text: str) -> bool:
+def has_white_space_except_space(text: str) -> bool:
 	"""
 	Determines if string contains white space other than space.
 
@@ -131,7 +133,7 @@ def hasWhiteSpaceExceptSpace(text: str) -> bool:
 	return WHITE_SPACE_EXCEPT_SPACE_REGEX.search(text) is not None
 
 
-def minIndent(text: str) -> str:
+def min_indent(text: str) -> str:
 	"""
 	Retrieves the indention characters from the line with the least indention.
 
@@ -150,7 +152,7 @@ def minIndent(text: str) -> str:
 	return min(lines, default="", key=len)
 
 
-def multiReplace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrStrType]]) -> BytesOrStrType:
+def multi_replace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrStrType]]) -> BytesOrStrType:
 	"""
 	Performs multiple replacement operations on a string or bytes-like object.
 
@@ -166,7 +168,7 @@ def multiReplace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrSt
 	return data
 
 
-def regexFuzzy(text: Union[str, Sequence[str]]) -> str:
+def regex_fuzzy(text: Union[str, Sequence[str]]) -> str:
 	"""
 	Creates a regular expression matching all or part of a string or sequence.
 
@@ -188,7 +190,7 @@ def regexFuzzy(text: Union[str, Sequence[str]]) -> str:
 	return "|".join("(".join(list(item)) + ")?" * (len(item) - 1) for item in text)
 
 
-def removeWhiteSpace(text: str) -> str:
+def remove_white_space(text: str) -> str:
 	"""
 	Removes all white space characters.
 
@@ -201,7 +203,7 @@ def removeWhiteSpace(text: str) -> str:
 	return WHITE_SPACE_REGEX.sub("", text)
 
 
-def removeWhiteSpaceExceptSpace(text: str) -> str:
+def remove_white_space_except_space(text: str) -> str:
 	"""
 	Removes all white space characters except for space.
 
@@ -227,7 +229,7 @@ def simplified(text: str) -> str:
 	return WHITE_SPACE_REGEX.sub(" ", text).strip()
 
 
-def stripAnsi(text: str) -> str:
+def strip_ansi(text: str) -> str:
 	"""
 	Strips ANSI escape sequences from text.
 

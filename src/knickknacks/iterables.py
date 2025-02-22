@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ def average(items: Iterable[float]) -> float:
 		return 0
 
 
-def humanSort(lst: Sequence[str]) -> list[str]:
+def human_sort(lst: Sequence[str]) -> list[str]:
 	"""
 	Sorts a list of strings, with numbers sorted according to their numeric value.
 
@@ -65,7 +65,7 @@ def humanSort(lst: Sequence[str]) -> list[str]:
 	)
 
 
-def lpadList(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
+def lpad_list(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
 	"""
 	Pad the left side of a list.
 
@@ -83,7 +83,7 @@ def lpadList(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = Fals
 	return [*[padding] * (count - len(lst)), *lst]
 
 
-def padList(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
+def pad_list(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
 	"""
 	Pad the right side of a list.
 

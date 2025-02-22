@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ from pydoc import pager
 from types import FrameType
 
 
-def getFunctionField(back: int = 0) -> FrameType:
+def get_function_field(back: int = 0) -> FrameType:
 	"""
 	Retrieves the stack field for the function which called this function.
 
@@ -55,7 +55,7 @@ def getFunctionField(back: int = 0) -> FrameType:
 	raise AttributeError("Unable to get reference to function.")
 
 
-def getFunctionName(back: int = 0) -> str:
+def get_function_name(back: int = 0) -> str:
 	"""
 	Retrieves the name of the function which called this function.
 
@@ -66,7 +66,7 @@ def getFunctionName(back: int = 0) -> str:
 		The function name, or an empty string if not found.
 	"""
 	try:
-		return getFunctionField(back + 1).f_code.co_name
+		return get_function_field(back + 1).f_code.co_name
 	except AttributeError:
 		return ""
 

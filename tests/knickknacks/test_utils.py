@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,29 +34,29 @@ from knickknacks import utils
 
 
 class TestUtils(TestCase):
-	def test_getFunctionField(self) -> None:
-		thisFunctionField = inspect.currentframe()
-		if thisFunctionField is None:
-			raise TypeError("thisFunctionField is None.")
-		thisFunctionName = thisFunctionField.f_code.co_name
-		self.assertEqual(utils.getFunctionField().f_code.co_name, thisFunctionName)
+	def test_get_function_field(self) -> None:
+		this_function_field = inspect.currentframe()
+		if this_function_field is None:
+			raise TypeError("this_function_field is None.")
+		this_function_name = this_function_field.f_code.co_name
+		self.assertEqual(utils.get_function_field().f_code.co_name, this_function_name)
 		with self.assertRaises(AttributeError):
-			utils.getFunctionField(sys.getrecursionlimit() * 2)
+			utils.get_function_field(sys.getrecursionlimit() * 2)
 
-	def test_getFunctionName(self) -> None:
-		thisFunctionField = inspect.currentframe()
-		if thisFunctionField is None:
-			raise TypeError("thisFunctionField is None.")
-		thisFunctionName = thisFunctionField.f_code.co_name
-		self.assertEqual(utils.getFunctionName(), thisFunctionName)
-		self.assertEqual(utils.getFunctionName(sys.getrecursionlimit() * 2), "")
+	def test_get_function_name(self) -> None:
+		this_function_field = inspect.currentframe()
+		if this_function_field is None:
+			raise TypeError("this_function_field is None.")
+		this_function_name = this_function_field.f_code.co_name
+		self.assertEqual(utils.get_function_name(), this_function_name)
+		self.assertEqual(utils.get_function_name(sys.getrecursionlimit() * 2), "")
 
 	@patch("knickknacks.utils.pager")
 	@patch("knickknacks.utils.shutil")
-	def test_page(self, mockShutil: Mock, mockPager: Mock) -> None:
+	def test_page(self, mock_shutil: Mock, mock_pager: Mock) -> None:
 		cols: int = 80
 		rows: int = 24
-		mockShutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
+		mock_shutil.get_terminal_size.return_value = os.terminal_size((cols, rows))
 		lines: list[str] = [
 			"This is the first line.",
 			"this is the second line.",
@@ -67,4 +67,4 @@ class TestUtils(TestCase):
 		lines = "\n".join(lines).splitlines()
 		utils.page(lines)
 		text: str = "\n".join(textwrap.fill(line.strip(), cols - 1) for line in lines)
-		mockPager.assert_called_once_with(text)
+		mock_pager.assert_called_once_with(text)

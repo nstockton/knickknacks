@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ def clamp(value: float, minimum: float, maximum: float) -> float:
 	return minimum if value < minimum else maximum if value > maximum else value  # NOQA: FURB136
 
 
-def floatToFraction(number: float) -> str:
+def float_to_fraction(number: float) -> str:
 	"""
 	Converts a float to a fraction.
 
@@ -62,7 +62,7 @@ def floatToFraction(number: float) -> str:
 	return str(fractions.Fraction(number).limit_denominator())
 
 
-def roundHalfAwayFromZero(number: float, decimals: int = 0) -> float:
+def round_half_away_from_zero(number: float, decimals: int = 0) -> float:
 	"""
 	Rounds a float away from 0 if the fractional is 5 or more.
 

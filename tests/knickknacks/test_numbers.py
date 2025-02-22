@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,13 +34,13 @@ class TestNumbers(TestCase):
 		self.assertEqual(numbers.clamp(4, 5, 20), 5)
 		self.assertEqual(numbers.clamp(50, 5, 20), 20)
 
-	def test_floatToFraction(self) -> None:
-		self.assertEqual(numbers.floatToFraction(0.25), "1/4")
-		self.assertEqual(numbers.floatToFraction(3.13), "313/100")
-		self.assertEqual(numbers.floatToFraction(2), "2")
+	def test_float_to_fraction(self) -> None:
+		self.assertEqual(numbers.float_to_fraction(0.25), "1/4")
+		self.assertEqual(numbers.float_to_fraction(3.13), "313/100")
+		self.assertEqual(numbers.float_to_fraction(2), "2")
 
-	def test_roundHalfAwayFromZero(self) -> None:
-		self.assertEqual(numbers.roundHalfAwayFromZero(5.4), 5.0)
-		self.assertEqual(numbers.roundHalfAwayFromZero(5.5), 6.0)
-		self.assertEqual(numbers.roundHalfAwayFromZero(-5.4), -5.0)
-		self.assertEqual(numbers.roundHalfAwayFromZero(-5.5), -6.0)
+	def test_round_half_away_from_zero(self) -> None:
+		self.assertEqual(numbers.round_half_away_from_zero(5.4), 5.0)
+		self.assertEqual(numbers.round_half_away_from_zero(5.5), 6.0)
+		self.assertEqual(numbers.round_half_away_from_zero(-5.4), -5.0)
+		self.assertEqual(numbers.round_half_away_from_zero(-5.5), -6.0)

@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import re
 from typing import Union
 
 # Local Modules:
-from .strings import multiReplace
+from .strings import multi_replace
 from .typedef import ReBytesPatternType, RePatternType
 
 
@@ -54,7 +54,7 @@ UNESCAPE_XML_NUMERIC_BYTES_REGEX: ReBytesPatternType = re.compile(rb"&#(?P<hex>x
 XML_ATTRIBUTE_REGEX: RePatternType = re.compile(r"([\w-]+)(\s*=+\s*('[^']*'|\"[^\"]*\"|(?!['\"])[^\s]*))?")
 
 
-def escapeXMLString(text: str) -> str:
+def escape_xml_string(text: str) -> str:
 	"""
 	Escapes XML entities in a string.
 
@@ -64,10 +64,10 @@ def escapeXMLString(text: str) -> str:
 	Returns:
 		A copy of the string with XML entities escaped.
 	"""
-	return multiReplace(text, ESCAPE_XML_STR_ENTITIES)
+	return multi_replace(text, ESCAPE_XML_STR_ENTITIES)
 
 
-def getXMLAttributes(text: str) -> dict[str, Union[str, None]]:
+def get_xml_attributes(text: str) -> dict[str, Union[str, None]]:
 	"""
 	Extracts XML attributes from a tag.
 
@@ -94,7 +94,7 @@ def getXMLAttributes(text: str) -> dict[str, Union[str, None]]:
 	return attributes
 
 
-def unescapeXMLBytes(data: bytes) -> bytes:
+def unescape_xml_bytes(data: bytes) -> bytes:
 	"""
 	Unescapes XML entities in a bytes-like object.
 
@@ -105,11 +105,11 @@ def unescapeXMLBytes(data: bytes) -> bytes:
 		A copy of the data with XML entities unescaped.
 	"""
 
-	def referenceToBytes(match: re.Match[bytes]) -> bytes:
-		isHex: bytes = match.group("hex")
+	def reference_to_bytes(match: re.Match[bytes]) -> bytes:
+		is_hex: bytes = match.group("hex")
 		value: bytes = match.group("value")
-		return bytes((int(value, 16 if isHex else 10),))
+		return bytes((int(value, 16 if is_hex else 10),))
 
-	return multiReplace(
-		UNESCAPE_XML_NUMERIC_BYTES_REGEX.sub(referenceToBytes, data), UNESCAPE_XML_BYTES_ENTITIES
+	return multi_replace(
+		UNESCAPE_XML_NUMERIC_BYTES_REGEX.sub(reference_to_bytes, data), UNESCAPE_XML_BYTES_ENTITIES
 	)

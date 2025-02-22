@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -135,7 +135,7 @@ LATIN_DECODING_REPLACEMENTS: dict[int, str] = {
 }
 
 
-def decodeBytes(data: bytes) -> str:
+def decode_bytes(data: bytes) -> str:
 	"""
 	Decodes bytes into a string.
 
@@ -153,13 +153,13 @@ def decodeBytes(data: bytes) -> str:
 	# Translate non-ASCII characters to their ASCII equivalents.
 	try:
 		# If encoded UTF-8, re-encode the data before decoding because of multi-byte code points.
-		return data.decode("utf-8").encode("us-ascii", "latin2ascii").decode("us-ascii")
+		return data.decode("utf-8").encode("us-ascii", "latin_to_ascii").decode("us-ascii")
 	except UnicodeDecodeError:
 		# Assume data is encoded Latin-1.
-		return str(data, "us-ascii", "latin2ascii")
+		return str(data, "us-ascii", "latin_to_ascii")
 
 
-def iterBytes(data: bytes) -> Generator[bytes, None, None]:
+def iter_bytes(data: bytes) -> Generator[bytes, None, None]:
 	"""
 	A generator which yields each byte of a bytes-like object.
 
@@ -173,7 +173,7 @@ def iterBytes(data: bytes) -> Generator[bytes, None, None]:
 		yield data[i : i + 1]
 
 
-def _latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
+def _latin_to_ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
 	if isinstance(error, UnicodeEncodeError):
 		# Return value can be bytes or a string.
 		return LATIN_ENCODING_REPLACEMENTS.get(error.object[error.start], b"?"), error.start + 1
@@ -184,4 +184,4 @@ def _latin2ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
 	raise NotImplementedError("How'd you manage this?") from error
 
 
-codecs.register_error("latin2ascii", _latin2ascii)
+codecs.register_error("latin_to_ascii", _latin_to_ascii)

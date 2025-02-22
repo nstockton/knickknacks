@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,21 +29,21 @@ from knickknacks import databytes
 
 
 class TestDataBytes(TestCase):
-	def test_decodeBytes(self) -> None:
-		asciiChars: str = "".join(chr(i) for i in range(128))
-		latinChars: str = "".join(chr(i) for i in range(128, 256))
-		latinReplacements: str = "".join(
-			databytes.LATIN_DECODING_REPLACEMENTS.get(ord(char), "?") for char in latinChars
+	def test_decode_bytes(self) -> None:
+		ascii_chars: str = "".join(chr(i) for i in range(128))
+		latin_chars: str = "".join(chr(i) for i in range(128, 256))
+		latin_replacements: str = "".join(
+			databytes.LATIN_DECODING_REPLACEMENTS.get(ord(char), "?") for char in latin_chars
 		)
-		self.assertEqual(databytes.decodeBytes(bytes(asciiChars, "us-ascii")), asciiChars)
-		self.assertEqual(databytes.decodeBytes(bytes(latinChars, "latin-1")), latinReplacements)
-		self.assertEqual(databytes.decodeBytes(bytes(latinChars, "utf-8")), latinReplacements)
+		self.assertEqual(databytes.decode_bytes(bytes(ascii_chars, "us-ascii")), ascii_chars)
+		self.assertEqual(databytes.decode_bytes(bytes(latin_chars, "latin-1")), latin_replacements)
+		self.assertEqual(databytes.decode_bytes(bytes(latin_chars, "utf-8")), latin_replacements)
 
-	def test_iterBytes(self) -> None:
+	def test_iter_bytes(self) -> None:
 		sent: bytes = b"hello"
 		expected: tuple[bytes, ...] = (b"h", b"e", b"l", b"l", b"o")
-		self.assertEqual(tuple(databytes.iterBytes(sent)), expected)
+		self.assertEqual(tuple(databytes.iter_bytes(sent)), expected)
 
-	def test_latin2ascii(self) -> None:
+	def test_latin_to_ascii(self) -> None:
 		with self.assertRaises(NotImplementedError):
-			databytes._latin2ascii(UnicodeError("junk"))  # NOQA: SLF001
+			databytes._latin_to_ascii(UnicodeError("junk"))  # NOQA: SLF001

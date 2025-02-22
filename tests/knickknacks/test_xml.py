@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,18 @@ from knickknacks import xml
 
 
 class TestXML(TestCase):
-	def test_escapeXMLString(self) -> None:
-		originalString: str = "<one&two'\">three"
-		expectedString: str = "&lt;one&amp;two'\"&gt;three"
-		self.assertEqual(xml.escapeXMLString(originalString), expectedString)
+	def test_escape_xml_string(self) -> None:
+		original_string: str = "<one&two'\">three"
+		expected_string: str = "&lt;one&amp;two'\"&gt;three"
+		self.assertEqual(xml.escape_xml_string(original_string), expected_string)
 
-	def test_getXMLAttributes(self) -> None:
+	def test_get_xml_attributes(self) -> None:
 		self.assertEqual(
-			xml.getXMLAttributes('test1=value1 test2="value2" test3 /'),
+			xml.get_xml_attributes('test1=value1 test2="value2" test3 /'),
 			{"test1": "value1", "test2": "value2", "test3": None},
 		)
 
-	def test_unescapeXMLBytes(self) -> None:
-		originalBytes: bytes = b"&lt;'\"one&amp;gt;two&gt;three&#35;four&#x5F;&#x5f;five&amp;#35;six"
-		expectedBytes: bytes = b"<'\"one&gt;two>three#four__five&#35;six"
-		self.assertEqual(xml.unescapeXMLBytes(originalBytes), expectedBytes)
+	def test_unescape_xml_bytes(self) -> None:
+		original_bytes: bytes = b"&lt;'\"one&amp;gt;two&gt;three&#35;four&#x5F;&#x5f;five&amp;#35;six"
+		expected_bytes: bytes = b"<'\"one&gt;two>three#four__five&#35;six"
+		self.assertEqual(xml.unescape_xml_bytes(original_bytes), expected_bytes)

@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Nick Stockton
+# Copyright (c) 2025 Nick Stockton
 # -----------------------------------------------------------------------------
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,11 +31,11 @@ from functools import cache
 from pathlib import Path
 
 # Local Modules:
-from .utils import getFunctionField
+from .utils import get_function_field
 
 
 @cache
-def getDirectoryPath(*args: str) -> str:
+def get_directory_path(*args: str) -> str:
 	"""
 	Retrieves the path of the directory where the program is located.
 
@@ -48,16 +48,16 @@ def getDirectoryPath(*args: str) -> str:
 	Returns:
 		The path.
 	"""
-	if isFrozen():
+	if is_frozen():
 		path = Path(sys.executable).parent
 	else:
-		frame = getFunctionField(1)
+		frame = get_function_field(1)
 		path = Path(inspect.getabsfile(frame)).parent
 	return str(path.joinpath(*args).resolve())
 
 
 @cache
-def isFrozen() -> bool:
+def is_frozen() -> bool:
 	"""
 	Determines whether the program is running from a frozen copy or from source.
 
