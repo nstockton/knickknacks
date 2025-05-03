@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://nstockton.github.io/knickknacks/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/license/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/iterables/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/numbers/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/platforms/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/strings/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/testing/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://nstockton.github.io/knickknacks/api/utils/</loc>
-         <lastmod>2025-02-22</lastmod>
+         <lastmod>2025-05-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
