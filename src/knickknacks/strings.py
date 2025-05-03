@@ -33,7 +33,21 @@ from typing import Any, Optional, Union
 from .typedef import BytesOrStrType, RePatternType
 
 
-ANSI_COLOR_REGEX: RePatternType = re.compile(r"\x1b\[[\d;]+m")
+# Regex from https://stackoverflow.com/questions/14693701/how-can-i-remove-the-ansi-escape-sequences-from-a-string-in-python
+ANSI_REGEX: RePatternType = re.compile(
+	r"""
+		\x1B  # ESC.
+		(?:  # 7-bit C1 Fe, except CSI.
+			[@-Z\\-_]
+		|  # Or [ for CSI, followed by a control sequence.
+			\[
+			[0-?]*  # Parameter bytes.
+			[ -/]*  # Intermediate bytes.
+			[@-~]  # Final byte.
+		)
+	""",
+	flags=re.VERBOSE,
+)
 INDENT_REGEX: RePatternType = re.compile(r"^(?P<indent>\s*)(?P<text>.*)", flags=re.UNICODE)
 WHITE_SPACE_REGEX: RePatternType = re.compile(r"\s+", flags=re.UNICODE)
 # Use negative look-ahead to exclude the space character from the \s character class.
@@ -239,4 +253,4 @@ def strip_ansi(text: str) -> str:
 	Returns:
 		The text with ANSI escape sequences stripped.
 	"""
-	return ANSI_COLOR_REGEX.sub("", text)
+	return ANSI_REGEX.sub("", text)
