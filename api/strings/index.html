@@ -731,7 +731,7 @@
   <tbody>
       <tr>
         <td><code>function_or_string</code></td>
-        <td><code>Union[str, Callable[..., Any]]</code></td>
+        <td><code>str | Callable[..., Any]</code></td>
         <td><p>The function containing the docstring, or the docstring its self.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -743,7 +743,7 @@
       </tr>
       <tr>
         <td><code>prefix</code></td>
-        <td><code>Optional[str]</code></td>
+        <td><code>str | None</code></td>
         <td><p>One or more characters to use for indention.</p></td>
         <td><code>None</code></td>
       </tr>
@@ -767,7 +767,7 @@
         <details class="quote">
           <summary>Source code in <code>knickknacks/strings.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format_docstring</span><span class="p">(</span>
-	<span class="n">function_or_string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">79</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+	<span class="n">function_or_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">79</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Formats a docstring for displaying.</span>
@@ -1141,7 +1141,7 @@
   <tbody>
       <tr>
         <td><code>text</code></td>
-        <td><code>Union[str, Sequence[str]]</code></td>
+        <td><code>str | Sequence[str]</code></td>
         <td><p>The text to be converted.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1179,7 +1179,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/strings.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">regex_fuzzy</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">regex_fuzzy</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Creates a regular expression matching all or part of a string or sequence.</span>
 
@@ -1192,7 +1192,7 @@
 <span class="sd">	Raises:</span>
 <span class="sd">		TypeError: If text is neither a string nor sequence of strings.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)):</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Sequence</span><span class="p">):</span>
 		<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Text must be either a string or sequence of strings.&quot;</span><span class="p">)</span>
 	<span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
 		<span class="k">return</span> <span class="s2">&quot;&quot;</span>
