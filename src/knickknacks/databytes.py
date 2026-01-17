@@ -27,7 +27,6 @@ from __future__ import annotations
 import codecs
 from collections.abc import Generator
 from contextlib import suppress
-from typing import Union
 
 
 # Latin-1 replacement values taken from the MUME help page.
@@ -173,7 +172,7 @@ def iter_bytes(data: bytes) -> Generator[bytes, None, None]:
 		yield data[i : i + 1]
 
 
-def _latin_to_ascii(error: UnicodeError) -> tuple[Union[bytes, str], int]:
+def _latin_to_ascii(error: UnicodeError) -> tuple[bytes | str, int]:
 	if isinstance(error, UnicodeEncodeError):
 		# Return value can be bytes or a string.
 		return LATIN_ENCODING_REPLACEMENTS.get(error.object[error.start], b"?"), error.start + 1

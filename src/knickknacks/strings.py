@@ -27,7 +27,7 @@ from __future__ import annotations
 import re
 import textwrap
 from collections.abc import Callable, Sequence
-from typing import Any, Optional, Union
+from typing import Any
 
 # Local Modules:
 from .typedef import BytesOrStrType, RePatternType
@@ -71,7 +71,7 @@ def camel_case(text: str, delimiter: str) -> str:
 
 
 def format_docstring(
-	function_or_string: Union[str, Callable[..., Any]], width: int = 79, prefix: Optional[str] = None
+	function_or_string: str | Callable[..., Any], width: int = 79, prefix: str | None = None
 ) -> str:
 	"""
 	Formats a docstring for displaying.
@@ -182,7 +182,7 @@ def multi_replace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrS
 	return data
 
 
-def regex_fuzzy(text: Union[str, Sequence[str]]) -> str:
+def regex_fuzzy(text: str | Sequence[str]) -> str:
 	"""
 	Creates a regular expression matching all or part of a string or sequence.
 

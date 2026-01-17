@@ -28,7 +28,7 @@ import secrets
 import threading
 import time
 from datetime import datetime, timezone
-from typing import ClassVar, Optional, Union
+from typing import ClassVar
 from uuid import UUID
 
 # Local Modules:
@@ -72,7 +72,7 @@ class UUID7:  # NOQA: PLR0904
 	_previous_milliseconds: int = get_current_milliseconds()
 	_previous_counter: int = get_random_counter()
 
-	def __init__(self, value: Optional[bytes] = None) -> None:
+	def __init__(self, value: bytes | None = None) -> None:
 		"""
 		Defines the constructor.
 
@@ -272,28 +272,28 @@ class UUID7:  # NOQA: PLR0904
 			return self.uuid == other
 		return False
 
-	def __lt__(self, other: Union[Self, UUID]) -> bool:
+	def __lt__(self, other: Self | UUID) -> bool:
 		if isinstance(other, type(self)):
 			return self.uuid < other.uuid
 		if isinstance(other, UUID):
 			return self.uuid < other
 		return False
 
-	def __gt__(self, other: Union[Self, UUID]) -> bool:
+	def __gt__(self, other: Self | UUID) -> bool:
 		if isinstance(other, type(self)):
 			return self.uuid > other.uuid
 		if isinstance(other, UUID):
 			return self.uuid > other
 		return False
 
-	def __le__(self, other: Union[Self, UUID]) -> bool:
+	def __le__(self, other: Self | UUID) -> bool:
 		if isinstance(other, type(self)):
 			return self.uuid <= other.uuid
 		if isinstance(other, UUID):
 			return self.uuid <= other
 		return False
 
-	def __ge__(self, other: Union[Self, UUID]) -> bool:
+	def __ge__(self, other: Self | UUID) -> bool:
 		if isinstance(other, type(self)):
 			return self.uuid >= other.uuid
 		if isinstance(other, UUID):

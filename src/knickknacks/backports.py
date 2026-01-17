@@ -27,7 +27,6 @@ from __future__ import annotations
 import io
 import pathlib
 import sys
-from typing import Optional
 
 
 if sys.version_info >= (3, 11):
@@ -44,7 +43,7 @@ class Path(pathlib.Path):
 	"""
 
 	def read_text(
-		self, encoding: Optional[str] = None, errors: Optional[str] = None, newline: Optional[str] = None
+		self, encoding: str | None = None, errors: str | None = None, newline: str | None = None
 	) -> str:
 		"""
 		Open the file in text mode, read it, and close the file.

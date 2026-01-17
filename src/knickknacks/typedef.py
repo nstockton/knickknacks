@@ -48,9 +48,9 @@ else:
 
 AnyMappingType: TypeAlias = Mapping[Any, Any]
 BytesOrStrType = TypeVar("BytesOrStrType", bytes, str)
-ReBytesMatchType: TypeAlias = Union[re.Match[bytes], None]
+ReBytesMatchType: TypeAlias = re.Match[bytes] | None
 ReBytesPatternType: TypeAlias = re.Pattern[bytes]
-ReMatchType: TypeAlias = Union[re.Match[str], None]
+ReMatchType: TypeAlias = re.Match[str] | None
 RePatternType: TypeAlias = re.Pattern[str]
 
 

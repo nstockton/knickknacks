@@ -25,7 +25,6 @@ from __future__ import annotations
 
 # Built-in Modules:
 import re
-from typing import Union
 
 # Local Modules:
 from .strings import multi_replace
@@ -67,7 +66,7 @@ def escape_xml_string(text: str) -> str:
 	return multi_replace(text, ESCAPE_XML_STR_ENTITIES)
 
 
-def get_xml_attributes(text: str) -> dict[str, Union[str, None]]:
+def get_xml_attributes(text: str) -> dict[str, str | None]:
 	"""
 	Extracts XML attributes from a tag.
 
@@ -82,7 +81,7 @@ def get_xml_attributes(text: str) -> dict[str, Union[str, None]]:
 	Returns:
 		The extracted attributes.
 	"""
-	attributes: dict[str, Union[str, None]] = {}
+	attributes: dict[str, str | None] = {}
 	for name, rest, value in XML_ATTRIBUTE_REGEX.findall(text):
 		if not rest:
 			attributes[name.lower()] = None
