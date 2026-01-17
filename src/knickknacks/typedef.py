@@ -27,7 +27,7 @@ from __future__ import annotations
 import re
 import sys
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, ParamSpec, TypeAlias, TypeVar, Union
 
 
 if sys.version_info >= (3, 12):
@@ -38,16 +38,12 @@ if sys.version_info >= (3, 11):
 	from typing import Self
 else:
 	from typing_extensions import Self
-if sys.version_info >= (3, 10):
-	from typing import ParamSpec, TypeAlias
-else:
-	from typing_extensions import ParamSpec, TypeAlias
 # Literal from typing module has various issues in different Python versions, see:
 # https://typing-extensions.readthedocs.io/en/latest/#Literal
-if sys.version_info >= (3, 10, 1) or (3, 9, 8) <= sys.version_info < (3, 10):
+if sys.version_info >= (3, 10, 1):
 	from typing import Literal
 else:
-	from typing_extensions import Literal  # type: ignore[assignment]
+	from typing_extensions import Literal  # type: ignore[assignment] # NOQA: UP035
 
 
 AnyMappingType: TypeAlias = Mapping[Any, Any]

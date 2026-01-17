@@ -195,7 +195,7 @@ def regex_fuzzy(text: Union[str, Sequence[str]]) -> str:
 	Raises:
 		TypeError: If text is neither a string nor sequence of strings.
 	"""
-	if not isinstance(text, (str, Sequence)):
+	if not isinstance(text, str | Sequence):
 		raise TypeError("Text must be either a string or sequence of strings.")
 	if not text:
 		return ""
