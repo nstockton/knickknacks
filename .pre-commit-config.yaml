@@ -1,7 +1,7 @@
 # Apply to all files without commiting:
-# python -B -m pre_commit run --all-files
+# python -B -m prek run --all-files
 # Update this file:
-# python -B -m pre_commit autoupdate
+# python -B -m prek autoupdate
 exclude: '^$'
 fail_fast: false
 default_language_version:

@@ -43,7 +43,7 @@ else:
 if sys.version_info >= (3, 10, 1):
 	from typing import Literal
 else:
-	from typing_extensions import Literal  # type: ignore[assignment] # NOQA: UP035
+	from typing_extensions import Literal  # NOQA: UP035
 
 
 AnyMappingType: TypeAlias = Mapping[Any, Any]

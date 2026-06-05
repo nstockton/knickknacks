@@ -47,9 +47,9 @@ class TestTesting(TestCase):
 	def test_container_empty_mixin(self) -> None:
 		test = ContainerEmpty()
 		test.assertContainerEmpty([])
-		test.assertIsInstance.assert_called_once()
-		test.assertFalse.assert_called_once()
+		test.assertIsInstance.assert_called_once()  # type: ignore[attr-defined]
+		test.assertFalse.assert_called_once()  # type: ignore[attr-defined]
 		test.reset_mock()
 		test.assertContainerNotEmpty([])
-		test.assertIsInstance.assert_called_once()
-		test.assertTrue.assert_called_once()
+		test.assertIsInstance.assert_called_once()  # type: ignore[attr-defined]
+		test.assertTrue.assert_called_once()  # type: ignore[attr-defined]

@@ -57,7 +57,7 @@
 
 [dependency-groups]
 	dev = [
-		"pre-commit>=3.5,<4.0",
+		"prek>=0.3,<0.4",
 	]
 	docs = [
 		"jinja2==3.0.3",
@@ -69,12 +69,12 @@
 		"pytkdocs @ git+https://github.com/nstockton/pytkdocs.git@9991d493b408c403ac5691074e2af2e509f22926",
 	]
 	lint = [
-		"isort>=5.13,<6.0",
-		"mypy>=1.14,<2.0",
-		"ruff>=0.9,<1.0",
+		"isort>=8.0,<9.0",
+		"mypy>=1.20,<2.0",
+		"ruff>=0.15,<1.0",
 	]
 	test = [
-		"coverage[toml]>=7.6,<8.0",
+		"coverage[toml]>=7.13,<8.0",
 	]
 
 [tool.pdm.build]
@@ -154,7 +154,7 @@
 	max-complexity = 15
 
 [tool.ruff.lint.per-file-ignores]
-	"**/__init__.py" = ["D1"]
+	"**/__init__.py" = ["RUF067"]
 	"**/_version.py" = ["CPY001"]
 	"./tests/**" = ["D1", "PLR6301"]
 	"**/typedef.py" = ["F401"]
