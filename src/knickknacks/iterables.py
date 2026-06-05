@@ -27,7 +27,52 @@ from __future__ import annotations
 import re
 import statistics
 from collections.abc import Iterable, Sequence
-from typing import Any
+from typing import Any, TypeVar
+
+
+T = TypeVar("T")
+
+
+def find_any(sequence: Sequence[T], values: Iterable[T]) -> int:
+	"""
+	Return the index of the first occurrence in sequence of any value from values.
+
+	This is analogous to str.find but for any sequence and any matching element.
+
+	Args:
+		sequence: Sequence to search through.
+		values: Values to search for.
+
+	Returns:
+		Index of first match, 0 if values empty, or -1 if no match.
+	"""
+	if not values:
+		return 0  # Matches behavior of string.find if empty value supplied.
+	for i in range(len(sequence)):
+		if sequence[i] in values:
+			return i
+	return -1
+
+
+def rfind_any(sequence: Sequence[T], values: Iterable[T]) -> int:
+	"""
+	Return the index of the last occurrence in sequence of any value from values.
+
+	This is analogous to str.rfind but for any sequence and any matching element.
+
+	Args:
+		sequence: Sequence to search through.
+		values: Values to search for.
+
+	Returns:
+		Index of last match, length of sequence if empty values, or -1 if no match.
+	"""
+	if not values:
+		return len(sequence)  # Matches behavior of string.rfind if empty value supplied.
+	for i in reversed(range(len(sequence))):
+		if sequence[i] in values:
+			return i
+	return -1
 
 
 def average(items: Iterable[float]) -> float:
