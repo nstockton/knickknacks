@@ -30,20 +30,17 @@ import math
 
 def clamp(value: float, minimum: float, maximum: float) -> float:
 	"""
-	Clamps the given value between the given minimum and maximum values.
+	Clamp a value to be between minimum and maximum.
 
 	Args:
-		value: The value to restrict inside the range defined by minimum and maximum.
-		minimum: The minimum value to compare against.
-		maximum: The maximum value to compare against.
+		value: Value to clamp.
+		minimum: Lower limit.
+		maximum: Upper limit.
 
 	Returns:
-		The result between minimum and maximum.
+		Clamped value.
 	"""
-	# Note the ignore to the linter.
-	# The linter would have me use a combination of min and max functions inside each other.
-	# Using a ternary operator is much more readable, and according to timeit, faster.
-	return minimum if value < minimum else maximum if value > maximum else value  # NOQA: FURB136
+	return max(minimum, min(value, maximum))
 
 
 def float_to_fraction(number: float) -> str:
