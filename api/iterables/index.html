@@ -308,6 +308,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#knickknacks.iterables.find_any" class="md-nav__link">
+    find_any()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#knickknacks.iterables.human_sort" class="md-nav__link">
     human_sort()
   </a>
@@ -324,6 +331,13 @@
         <li class="md-nav__item">
   <a href="#knickknacks.iterables.pad_list" class="md-nav__link">
     pad_list()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knickknacks.iterables.rfind_any" class="md-nav__link">
+    rfind_any()
   </a>
   
 </li>
@@ -462,6 +476,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#knickknacks.iterables.find_any" class="md-nav__link">
+    find_any()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#knickknacks.iterables.human_sort" class="md-nav__link">
     human_sort()
   </a>
@@ -478,6 +499,13 @@
         <li class="md-nav__item">
   <a href="#knickknacks.iterables.pad_list" class="md-nav__link">
     pad_list()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#knickknacks.iterables.rfind_any" class="md-nav__link">
+    rfind_any()
   </a>
   
 </li>
@@ -602,6 +630,90 @@
 
 
 
+<h2 id="knickknacks.iterables.find_any" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">find_any</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></code>
+
+
+<a href="#knickknacks.iterables.find_any" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the index of the first occurrence in sequence of any value from values.</p>
+<p>This is analogous to str.find but for any sequence and any matching element.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>sequence</code></td>
+        <td><code>Sequence[T]</code></td>
+        <td><p>Sequence to search through.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>values</code></td>
+        <td><code>Iterable[T]</code></td>
+        <td><p>Values to search for.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>Index of first match, 0 if values empty, or -1 if no match.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>knickknacks/iterables.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_any</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Return the index of the first occurrence in sequence of any value from values.</span>
+
+<span class="sd">	This is analogous to str.find but for any sequence and any matching element.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		sequence: Sequence to search through.</span>
+<span class="sd">		values: Values to search for.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Index of first match, 0 if values empty, or -1 if no match.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">:</span>
+		<span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Matches behavior of string.find if empty value supplied.</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)):</span>
+		<span class="k">if</span> <span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">i</span>
+	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
 <h2 id="knickknacks.iterables.human_sort" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Function</span> <span class="n">human_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span></code>
 
@@ -625,7 +737,7 @@
   <tbody>
       <tr>
         <td><code>lst</code></td>
-        <td><code>Sequence[str]</code></td>
+        <td><code>Iterable[str]</code></td>
         <td><p>The list of strings to be sorted.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -648,7 +760,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/iterables.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">human_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">human_sort</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Sorts a list of strings, with numbers sorted according to their numeric value.</span>
 
@@ -660,9 +772,7 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
 		<span class="n">lst</span><span class="p">,</span>
-		<span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">[</span>
-			<span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d+)&quot;</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">UNICODE</span><span class="p">)</span>
-		<span class="p">],</span>
+		<span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d+)&quot;</span><span class="p">,</span> <span class="n">item</span><span class="p">)],</span>
 	<span class="p">)</span>
 </code></pre></div>
         </details>
@@ -699,13 +809,13 @@
   <tbody>
       <tr>
         <td><code>lst</code></td>
-        <td><code>Sequence[Any]</code></td>
+        <td><code>Sequence[T]</code></td>
         <td><p>The list to be padded.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>padding</code></td>
-        <td><code>Any</code></td>
+        <td><code>T</code></td>
         <td><p>The item to use for padding.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -733,14 +843,14 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>list[Any]</code></td>
+      <td><code>list[T]</code></td>
       <td><p>A padded copy of the list.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/iterables.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lpad_list</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">padding</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fixed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lpad_list</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">padding</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fixed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Pad the left side of a list.</span>
 
@@ -791,13 +901,13 @@
   <tbody>
       <tr>
         <td><code>lst</code></td>
-        <td><code>Sequence[Any]</code></td>
+        <td><code>Sequence[T]</code></td>
         <td><p>The list to be padded.</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>padding</code></td>
-        <td><code>Any</code></td>
+        <td><code>T</code></td>
         <td><p>The item to use for padding.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -825,14 +935,14 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>list[Any]</code></td>
+      <td><code>list[T]</code></td>
       <td><p>A padded copy of the list.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>knickknacks/iterables.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pad_list</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">padding</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fixed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pad_list</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">padding</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fixed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Pad the right side of a list.</span>
 
@@ -848,6 +958,90 @@
 	<span class="k">if</span> <span class="n">fixed</span><span class="p">:</span>
 		<span class="k">return</span> <span class="p">[</span><span class="o">*</span><span class="n">lst</span><span class="p">,</span> <span class="o">*</span><span class="p">[</span><span class="n">padding</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))][:</span><span class="n">count</span><span class="p">]</span>
 	<span class="k">return</span> <span class="p">[</span><span class="o">*</span><span class="n">lst</span><span class="p">,</span> <span class="o">*</span><span class="p">[</span><span class="n">padding</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="knickknacks.iterables.rfind_any" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">rfind_any</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></code>
+
+
+<a href="#knickknacks.iterables.rfind_any" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the index of the last occurrence in sequence of any value from values.</p>
+<p>This is analogous to str.rfind but for any sequence and any matching element.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>sequence</code></td>
+        <td><code>Sequence[T]</code></td>
+        <td><p>Sequence to search through.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>values</code></td>
+        <td><code>Iterable[T]</code></td>
+        <td><p>Values to search for.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>int</code></td>
+      <td><p>Index of last match, length of sequence if empty values, or -1 if no match.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>knickknacks/iterables.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rfind_any</span><span class="p">(</span><span class="n">sequence</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">values</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Return the index of the last occurrence in sequence of any value from values.</span>
+
+<span class="sd">	This is analogous to str.rfind but for any sequence and any matching element.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		sequence: Sequence to search through.</span>
+<span class="sd">		values: Values to search for.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Index of last match, length of sequence if empty values, or -1 if no match.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">:</span>
+		<span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>  <span class="c1"># Matches behavior of string.rfind if empty value supplied.</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">))):</span>
+		<span class="k">if</span> <span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">i</span>
+	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 </code></pre></div>
         </details>
     </div>
