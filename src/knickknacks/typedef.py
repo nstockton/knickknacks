@@ -28,7 +28,7 @@ from __future__ import annotations
 import re
 import sys
 from collections.abc import Mapping
-from typing import Any, ParamSpec, TypeAlias, TypeVar, Union
+from typing import Any, ParamSpec, Protocol, TypeAlias, TypeVar
 
 
 if sys.version_info >= (3, 12):
@@ -53,6 +53,20 @@ ReBytesMatchType: TypeAlias = re.Match[bytes] | None
 ReBytesPatternType: TypeAlias = re.Pattern[bytes]
 ReMatchType: TypeAlias = re.Match[str] | None
 RePatternType: TypeAlias = re.Pattern[str]
+T = TypeVar("T")
+
+
+class SupportsRichComparisonType(Protocol):
+	"""Protocol for types that support ordering via rich comparisons."""
+
+	def __lt__(self, other: Any, /) -> bool:
+		"""Return True if self is less than other."""
+
+	def __gt__(self, other: Any, /) -> bool:
+		"""Return True if self is greater than other."""
+
+
+SupportsRichComparisonT = TypeVar("SupportsRichComparisonT", bound=SupportsRichComparisonType)
 
 
 __all__: list[str] = [
@@ -65,6 +79,9 @@ __all__: list[str] = [
 	"ReMatchType",
 	"RePatternType",
 	"Self",
+	"SupportsRichComparisonT",
+	"SupportsRichComparisonType",
+	"T",
 	"TypeAlias",
 	"override",
 ]

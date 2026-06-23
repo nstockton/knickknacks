@@ -27,7 +27,7 @@ from __future__ import annotations
 # Built-in Modules:
 import re
 import textwrap
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Iterable
 from typing import Any
 
 # Local Modules:
@@ -49,11 +49,11 @@ ANSI_REGEX: RePatternType = re.compile(
 	""",
 	flags=re.VERBOSE,
 )
-INDENT_REGEX: RePatternType = re.compile(r"^(?P<indent>\s*)(?P<text>.*)", flags=re.UNICODE)
-WHITE_SPACE_REGEX: RePatternType = re.compile(r"\s+", flags=re.UNICODE)
+INDENT_REGEX: RePatternType = re.compile(r"^(?P<indent>\s*)(?P<text>.*)")
+WHITE_SPACE_REGEX: RePatternType = re.compile(r"\s+")
 # Use negative look-ahead to exclude the space character from the \s character class.
 # Another way to accomplish this would be to use negation (I.E. [^\S ]+).
-WHITE_SPACE_EXCEPT_SPACE_REGEX: RePatternType = re.compile(r"(?:(?![ ])\s+)", flags=re.UNICODE)
+WHITE_SPACE_EXCEPT_SPACE_REGEX: RePatternType = re.compile(r"(?:(?![ ])\s+)")
 
 
 def camel_case(text: str, delimiter: str) -> str:
@@ -167,13 +167,15 @@ def min_indent(text: str) -> str:
 	return min(lines, default="", key=len)
 
 
-def multi_replace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrStrType]]) -> BytesOrStrType:
+def multi_replace(
+	data: BytesOrStrType, replacements: Iterable[tuple[BytesOrStrType, BytesOrStrType]]
+) -> BytesOrStrType:
 	"""
 	Performs multiple replacement operations on a string or bytes-like object.
 
 	Args:
 		data: The text to perform the replacements on.
-		replacements: A sequence of tuples, each containing the text to match and the replacement.
+		replacements: An iterable of tuples, each containing the text to match and the replacement.
 
 	Returns:
 		The text with all the replacements applied.
@@ -183,7 +185,7 @@ def multi_replace(data: BytesOrStrType, replacements: Sequence[Sequence[BytesOrS
 	return data
 
 
-def regex_fuzzy(text: str | Sequence[str]) -> str:
+def regex_fuzzy(text: str | Iterable[str]) -> str:
 	"""
 	Creates a regular expression matching all or part of a string or sequence.
 
@@ -196,8 +198,8 @@ def regex_fuzzy(text: str | Sequence[str]) -> str:
 	Raises:
 		TypeError: If text is neither a string nor sequence of strings.
 	"""
-	if not isinstance(text, str | Sequence):
-		raise TypeError("Text must be either a string or sequence of strings.")
+	if not isinstance(text, str | Iterable):
+		raise TypeError("Text must be either a string or iterable of strings.")
 	if not text:
 		return ""
 	if isinstance(text, str):

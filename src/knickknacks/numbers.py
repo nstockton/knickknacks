@@ -28,8 +28,13 @@ from __future__ import annotations
 import fractions
 import math
 
+# Local Modules:
+from .typedef import SupportsRichComparisonT
 
-def clamp(value: float, minimum: float, maximum: float) -> float:
+
+def clamp(
+	value: SupportsRichComparisonT, minimum: SupportsRichComparisonT, maximum: SupportsRichComparisonT
+) -> SupportsRichComparisonT:
 	"""
 	Clamp a value to be between minimum and maximum.
 

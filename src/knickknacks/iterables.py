@@ -28,10 +28,9 @@ from __future__ import annotations
 import re
 import statistics
 from collections.abc import Iterable, Sequence
-from typing import Any, TypeVar
 
-
-T = TypeVar("T")
+# Local Modules:
+from .typedef import T
 
 
 def find_any(sequence: Sequence[T], values: Iterable[T]) -> int:
@@ -93,7 +92,7 @@ def average(items: Iterable[float]) -> float:
 		return 0
 
 
-def human_sort(lst: Sequence[str]) -> list[str]:
+def human_sort(lst: Iterable[str]) -> list[str]:
 	"""
 	Sorts a list of strings, with numbers sorted according to their numeric value.
 
@@ -105,13 +104,11 @@ def human_sort(lst: Sequence[str]) -> list[str]:
 	"""
 	return sorted(
 		lst,
-		key=lambda item: [
-			int(text) if text.isdigit() else text for text in re.split(r"(\d+)", item, flags=re.UNICODE)
-		],
+		key=lambda item: [int(text) if text.isdigit() else text for text in re.split(r"(\d+)", item)],
 	)
 
 
-def lpad_list(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
+def lpad_list(lst: Sequence[T], padding: T, count: int, *, fixed: bool = False) -> list[T]:
 	"""
 	Pad the left side of a list.
 
@@ -129,7 +126,7 @@ def lpad_list(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = Fal
 	return [*[padding] * (count - len(lst)), *lst]
 
 
-def pad_list(lst: Sequence[Any], padding: Any, count: int, *, fixed: bool = False) -> list[Any]:
+def pad_list(lst: Sequence[T], padding: T, count: int, *, fixed: bool = False) -> list[T]:
 	"""
 	Pad the right side of a list.
 
